@@ -1,4 +1,4 @@
-// ignore_for_file: unused_local_variable, equal_elements_in_set
+// ignore_for_file: unused_local_variable, equal_elements_in_set, deprecated_member_use
 
 import 'dart:developer';
 import 'dart:io';
@@ -8,14 +8,11 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_aws_s3_client/flutter_aws_s3_client.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:intl/intl.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:wystle/auth/login_flash_detail.dart';
-import 'package:wystle/auth/mobile_loginscreen.dart';
 import 'package:wystle/constant/image_constant.dart';
 import 'package:wystle/model/concern_notification.dart';
 import 'package:wystle/module/homepage/homepage.dart';
@@ -23,14 +20,12 @@ import 'package:wystle/widget/reusubility_button.dart';
 
 import '../constant/color_constant.dart';
 import '../model/login_flash_model.dart';
+import '../module/sharedpreference/userdata.dart';
 import '../service/api_services.dart';
-import '../service/aws_service.dart';
 import '../testing/location_custom.dart';
 import '../utils/utils.dart';
 import '../widget/pdfviewer.dart';
 import '../widget/shimmer_effect_line.dart';
-import '../widget/shimmer_progress_widget.dart';
-import 'package:flutter_pdfview/flutter_pdfview.dart' as pdfview;
 
 class ConcernNotification extends StatefulWidget {
   const ConcernNotification({Key? key}) : super(key: key);
@@ -41,15 +36,15 @@ class ConcernNotification extends StatefulWidget {
 
 class _ConcernNotificationState extends State<ConcernNotification> {
   // ignore: prefer_typing_uninitialized_variables
-  var _base64;
+  // var _base64;
   bool isProgressRunning = false;
   ConcernNotificationModel? concernNotificationModel;
   var location = Location();
-  LocationData? _currentPosition;
-  LatLng _initialcameraposition = LatLng(0.5937, 0.9629);
-  String? _address, _dateTime;
-  var latitude1;
-  var longitude1;
+  // LocationData? _currentPosition;
+  // LatLng _initialcameraposition = LatLng(0.5937, 0.9629);
+  // String? _address, _dateTime;
+  // var latitude1;
+  // var longitude1;
   bool agree = false;
   LoginFlashModel? loginFlashModel;
 
@@ -65,11 +60,14 @@ class _ConcernNotificationState extends State<ConcernNotification> {
         isProgressRunning = true;
       });
 
+      var userdata = UserData.geUserData();
       Map _body = {
+        "userid": userdata.userid,
         "country": "United Kingdom",
         "state": "England",
         "city": "City of London"
       };
+
       concernNotificationModel =
           await APIServices.getConcernNotificationAPI(_body);
     } catch (e) {
@@ -89,7 +87,9 @@ class _ConcernNotificationState extends State<ConcernNotification> {
         isProgressRunning = true;
       });
 
+      var userdata = UserData.geUserData();
       Map _body = {
+        "userid": userdata.userid,
         "country": "United Kingdom",
         "state": "England",
         "city": "City of London"
@@ -198,21 +198,6 @@ class _ConcernNotificationState extends State<ConcernNotification> {
                         children: [
                           Expanded(
                             child: InkWell(
-                              onTap: agree ? _agreeDoSomething : null,
-                              child: MaterialButton1(
-                                  color1: agree
-                                      ? ColorConstant.COLOR_LIGHT_BLACK
-                                      : ColorConstant.COLOR_LIGHT_BLACK
-                                          .withOpacity(0.4),
-                                  height1: 44,
-                                  txt1: 'Agree'),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Expanded(
-                            child: InkWell(
                               onTap: agree ? _declineDoSomething : null,
                               child: MaterialButton1(
                                   color1: agree
@@ -221,6 +206,21 @@ class _ConcernNotificationState extends State<ConcernNotification> {
                                           .withOpacity(0.4),
                                   height1: 44,
                                   txt1: 'Decline'),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          Expanded(
+                            child: InkWell(
+                              onTap: agree ? _agreeDoSomething : null,
+                              child: MaterialButton1(
+                                  color1: agree
+                                      ? ColorConstant.COLOR_LIGHT_BLACK
+                                      : ColorConstant.COLOR_LIGHT_BLACK
+                                          .withOpacity(0.4),
+                                  height1: 44,
+                                  txt1: 'Agree'),
                             ),
                           ),
                         ],
@@ -645,7 +645,7 @@ class _ConcernNotificationState extends State<ConcernNotification> {
       );
     }
 
-    log("agree click");
+    // log("agree click");
   }
 
   void _declineDoSomething() {

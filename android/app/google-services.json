@@ -1,42 +1,41 @@
 {
   "project_info": {
-    "project_number": "74679146697",
-    "project_id": "wystle-8c92c",
-    "storage_bucket": "wystle-8c92c.appspot.com"
+    "project_number": "356444014068",
+    "project_id": "wystle-90bdc",
+    "storage_bucket": "wystle-90bdc.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:74679146697:android:2f8f55c78fa6dbcad6d518",
+        "mobilesdk_app_id": "1:356444014068:android:410ff9d0861a5e071e25a1",
         "android_client_info": {
           "package_name": "com.example.wystle"
         }
       },
       "oauth_client": [
         {
-          "client_id": "74679146697-ltie4ef9fep8ptus6mk3fscbldbgcj5t.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.wystle",
-            "certificate_hash": "4d6534554ed7e48373d16d48eba44ef320bf52bc"
-          }
-        },
-        {
-          "client_id": "74679146697-thvji7ehcabj58nbgnohqgmn8gruaith.apps.googleusercontent.com",
+          "client_id": "356444014068-ik3amaf4c1vq5p3s15al5vk6n7beuhdr.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDJpz8FCtf-7DA7DDFWab8UjqEOIx-sl0g"
+          "current_key": "AIzaSyB1rwX8hFVkjSCuhk1iy-A93rkErDErYAY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "74679146697-thvji7ehcabj58nbgnohqgmn8gruaith.apps.googleusercontent.com",
+              "client_id": "356444014068-ik3amaf4c1vq5p3s15al5vk6n7beuhdr.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "356444014068-9ngadshh2rlgve8p2n93o7cfvkplujrj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.wystle"
+              }
             }
           ]
         }

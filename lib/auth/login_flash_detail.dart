@@ -6,28 +6,20 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_aws_s3_client/flutter_aws_s3_client.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:http/http.dart';
-import 'package:intl/intl.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:wystle/auth/concern_notification.dart';
-import 'package:wystle/auth/mobile_loginscreen.dart';
 import 'package:wystle/constant/image_constant.dart';
 import 'package:wystle/model/concern_notification.dart';
 import 'package:wystle/model/login_flash_model.dart';
 import 'package:wystle/module/homepage/homepage.dart';
 import 'package:wystle/widget/reusubility_button.dart';
 
-import '../constant/color_constant.dart';
-import '../model/boarding_model.dart';
+import '../module/sharedpreference/userdata.dart';
 import '../service/api_services.dart';
 import '../service/aws_service.dart';
 import '../testing/location_custom.dart';
 import '../utils/utils.dart';
 import '../widget/shimmer_effect_line.dart';
-import '../widget/shimmer_progress_widget.dart';
-import 'package:geocoding/geocoding.dart' as geocoding;
 
 class LoginFlashScreen extends StatefulWidget {
   const LoginFlashScreen({Key? key}) : super(key: key);
@@ -43,11 +35,11 @@ class _LoginFlashScreenState extends State<LoginFlashScreen> {
   LoginFlashModel? loginFlashModel;
   ConcernNotificationModel? concernNotificationModel;
   var location = Location();
-  LocationData? _currentPosition;
-  LatLng _initialcameraposition = LatLng(0.5937, 0.9629);
-  String? _address, _dateTime;
-  var latitude1;
-  var longitude1;
+  // LocationData? _currentPosition;
+  // LatLng _initialcameraposition = LatLng(0.5937, 0.9629);
+  // String? _address, _dateTime;
+  // var latitude1;
+  // var longitude1;
   bool enabled = false;
   bool isInternetCheck = false;
 
@@ -56,8 +48,9 @@ class _LoginFlashScreenState extends State<LoginFlashScreen> {
       setState(() {
         isProgressRunning = true;
       });
-
+      var userdata = UserData.geUserData();
       Map _body = {
+        "userid": userdata.userid,
         "country": "United Kingdom",
         "state": "England",
         "city": "City of London"
@@ -95,30 +88,6 @@ class _LoginFlashScreenState extends State<LoginFlashScreen> {
     return _base64;
   }
 
-  // Concern Notification API
-
-  Future<void> _apiconcernnotificationdetail() async {
-    try {
-      setState(() {
-        isProgressRunning = true;
-      });
-
-      Map _body = {
-        "country": "United Kingdom",
-        "state": "England",
-        "city": "City of London"
-      };
-      concernNotificationModel =
-          await APIServices.getConcernNotificationAPI(_body);
-    } catch (e) {
-      log(e.toString());
-    } finally {
-      setState(() {
-        isProgressRunning = false;
-      });
-    }
-  }
-
   // GPS check
 
   Future<void> enableLocation() async {
@@ -130,10 +99,8 @@ class _LoginFlashScreenState extends State<LoginFlashScreen> {
   Future<void> checkInternet() async {
     isInternetCheck = await InternetUtils.internetCheck();
     if (isInternetCheck) {
-      // log("Internet is connected");
     } else {
       InternetUtils.networkErrorDialog(context);
-      //   log("Internet is not connected");
     }
   }
 
@@ -142,13 +109,8 @@ class _LoginFlashScreenState extends State<LoginFlashScreen> {
     super.initState();
     enableLocation();
     _apiLoginFlashDetail().then((value) => {
-          _apiconcernnotificationdetail(),
           checkInternet(),
         });
-
-    // log(
-    //   "Latitude: ${_currentPosition!.latitude}, Longitude: ${_currentPosition!.longitude}",
-    // );
   }
 
   @override
@@ -218,7 +180,7 @@ class _LoginFlashScreenState extends State<LoginFlashScreen> {
                     // ),
                   ] else ...{
                     Padding(
-                      padding: EdgeInsets.only(top: 20),
+                      padding: const EdgeInsets.only(top: 20),
                       child: Center(
                         child: Shimmer.fromColors(
                           baseColor: Colors.grey[300]!,
@@ -423,39 +385,4 @@ class _LoginFlashScreenState extends State<LoginFlashScreen> {
       ),
     );
   }
-
-  // getLoc() async {
-
-  //   _currentPosition = await location.getLocation();
-  //   _initialcameraposition = LatLng(_currentPosition!.latitude!.toDouble(),
-  //       _currentPosition!.longitude!.toDouble());
-  //   location.onLocationChanged.listen((LocationData currentLocation) {
-  //     log("${currentLocation.latitude} : ${currentLocation.longitude}");
-
-  //     if (!mounted) return;
-  //     setState(() {
-  //       latitude1 = currentLocation.latitude;
-  //       longitude1 = currentLocation.longitude;
-  //       _currentPosition = currentLocation;
-  //       _initialcameraposition = LatLng(_currentPosition!.latitude!.toDouble(),
-  //           _currentPosition!.longitude!.toDouble());
-
-  //       DateTime now = DateTime.now();
-  //       _dateTime = DateFormat('EEE d MMM kk:mm:ss ').format(now);
-  //       // _getAddress(_currentPosition!.latitude!, _currentPosition!.longitude!)
-  //       //     .then((value) {
-  //       //   setState(() {
-  //       //     _address = "${value.first.addressLine}";
-  //       //   });
-  //       // });
-  //     });
-  //   });
-  // }
-
-  // Future<List<Address>> _getAddress(double lat, double lang) async {
-  //   final coordinates = Coordinates(lat, lang);
-  //   List<Address> add =
-  //       await geocoding.Geocoder.local.findAddressesFromCoordinates(coordinates);
-  //   return add;
-  // }
 }

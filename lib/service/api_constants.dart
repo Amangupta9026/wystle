@@ -16,6 +16,17 @@ class APIConstants {
   static const String API_LOGIN_FLASH = "get_rider_ob_login_flash_detail";
   static const String API_CONCERN_NOTIFICATION =
       "get_rider_ob_concern_notification_detail";
+  static const String API_OTPVERIFY = "send_sms_to_rider_mobile_number";
+  static const String API_LOGIN = "login_rider";
+  static const String API_REGISTER_VERIFY =
+      "send_verification_code_to_rider_email";
+  static const String API_EMAIL_REGISTER_VERIFY = "register_rider";
+  static const String API_LOGOUT = "rider_logout";
+  static const String API_VERIFY_RIDER_EMAIL = "verify_rider_email";
+  static const String API_VERIFY_EMAIL_SUCCESS =
+      "rider_email_verification_success";
+  static const String API_LOGIN_AFTER_CALL = "login_rider_cookies";
+  static const String API_USER_LOCATION = "predict_rider_location_from_geopoint";
 }
 
 class PrefConstants {
@@ -27,4 +38,20 @@ class PrefConstants {
   static const String USER_ID = "userId";
   static const String LATITUDE = "latitude";
   static const String LONGITUDE = "longitude";
+  static const String DEVICE_NAME = "deviceName";
+  static const String DEVICE_BRAND = "deviceBrand";
+  static const String DEVICE_ID = "deviceId";
+  static const String DEVICE_VERSION = "deviceVersion";
+  static const String DEVICE_MANUFACTURING = "deviceManufacturing";
+  static const String MOBILE_NUMBER = "mobileNumber";
+  // static const String AUTH_TOKEN = "authToken";
+  static const String USER_DATA = "userData";
+  static const String USER_EMAIL_VERIFY_TAG = "userEmailVerifyTag";
+
+  static const String USER_CURRENT_STREET = "userStreetLocation";
+   static const String USER_CURRENT_SUBLOCALITY = "userSubLocalLocation";
+  static const String USER_CITY = "userCity";
+  static const String USER_COUNTRY = "userCountry";
+  static const String USER_STATE = "userState";
+  static const String IP_ADDRESS = "ipAddress";
 }

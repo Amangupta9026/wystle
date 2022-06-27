@@ -104,8 +104,8 @@ class AppTheme {
     );
     final ThemeData base = ThemeData.dark();
     return base.copyWith(
-      popupMenuTheme: PopupMenuThemeData(color: Colors.black),
-      appBarTheme: AppBarTheme(color: Colors.black),
+      popupMenuTheme: const PopupMenuThemeData(color: Colors.black),
+      appBarTheme: const AppBarTheme(color: Colors.black),
       colorScheme: colorScheme,
       primaryColor: primaryColor,
       //  buttonColor: primaryColor,

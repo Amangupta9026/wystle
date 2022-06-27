@@ -89,7 +89,7 @@ class _ReferEarnState extends State<ReferEarn> {
                     ),
               ),
             ),
-            Container(
+            SizedBox(
               width: MediaQuery.of(context).size.width * 0.4,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(

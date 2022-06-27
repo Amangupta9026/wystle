@@ -1,23 +1,26 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:wystle/constant/image_constant.dart';
+import 'package:wystle/menu/help.dart';
 import 'package:wystle/menu/message.dart';
 import 'package:wystle/menu/refer_earn.dart';
 import 'package:wystle/menu/wallet.dart';
 
 import '../../constant/color_constant.dart';
+import '../../menu/coupon_screen.dart';
 import '../../menu/menu_profile.dart';
 import '../../menu/notifications.dart';
 import '../../menu/profile.dart';
+import '../sharedpreference/userdata.dart';
 
 class DrawerScreen extends StatefulWidget {
+  const DrawerScreen({Key? key}) : super(key: key);
+
   @override
   _DrawerScreenState createState() => _DrawerScreenState();
 }
 
 class _DrawerScreenState extends State<DrawerScreen> {
+  var userdata = UserData.geUserData();
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -77,7 +80,9 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Aman Gupta',
+                                    userdata.firstname! +
+                                        ' ' +
+                                        userdata.lastname!,
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline6
@@ -90,7 +95,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                     height: 2,
                                   ),
                                   Text(
-                                    '+919026888006',
+                                    userdata.mobileno!,
                                     style: Theme.of(context)
                                         .textTheme
                                         .subtitle2
@@ -123,8 +128,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const MenuProfile(),
-                            ),
+                                builder: (context) => const Profile()),
                           );
                         },
                       ),
@@ -192,7 +196,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const Notifications(),
+                              builder: (context) => Notifications(),
                             ),
                           );
                         },
@@ -244,6 +248,40 @@ class _DrawerScreenState extends State<DrawerScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => const MenuProfile(),
+                            ),
+                          );
+                        },
+                      ),
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      customRow(
+                        "Help",
+                        Image.asset(ImgConstants.CONTRACT_ICON,
+                            width: 28.0, height: 28.0),
+                        // FontAwesomeIcons.moon,
+                        () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HelpScreen(),
+                            ),
+                          );
+                        },
+                      ),
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      customRow(
+                        "Coupon",
+                        Image.asset(ImgConstants.CONTRACT_ICON,
+                            width: 28.0, height: 28.0),
+                        // FontAwesomeIcons.moon,
+                        () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>  CouponScreen(),
                             ),
                           );
                         },

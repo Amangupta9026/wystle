@@ -41,7 +41,7 @@ class _SearchDestinationState extends State<SearchDestination> {
     // GetAddressFromLatLong(position);
     List<Placemark> placemarks =
         await placemarkFromCoordinates(position.latitude, position.longitude);
-    print(placemarks);
+    log(placemarks.toString());
     Placemark place = placemarks[0];
     getAddress =
         '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
@@ -146,7 +146,7 @@ class _SearchDestinationState extends State<SearchDestination> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => SearchLocationMap()),
+                          builder: (context) => const SearchLocationMap()),
                     );
                     log("click individual location");
                   },
@@ -193,7 +193,7 @@ class _SearchDestinationState extends State<SearchDestination> {
   }
 
   getAddresses(value, lat, lon) async {
-    final Map<String, String> queryParameters = {'key': '$apiKey'};
+    final Map<String, String> queryParameters = {'key': apiKey};
     queryParameters['lat'] = '$lat';
     queryParameters['lon'] = '$lon';
 
@@ -202,7 +202,7 @@ class _SearchDestinationState extends State<SearchDestination> {
           'api.tomtom.com', '/search/2/search/$value.json', queryParameters));
       SearchModel jsonData =
           SearchModel.fromJson(convert.jsonDecode(response.body));
-      print('data $jsonData');
+      log('data $jsonData');
       //
       if (mounted) {
         setState(() {
@@ -233,7 +233,7 @@ class _SearchDestinationState extends State<SearchDestination> {
       );
       markers.add(initialMarker);
     } catch (e) {
-      print(e);
+      log(e.toString());
     }
   }
 
@@ -272,10 +272,10 @@ class _SearchDestinationState extends State<SearchDestination> {
         desiredAccuracy: LocationAccuracy.high);
   }
 
-  Future<void> GetAddressFromLatLong(Position position) async {
+  Future<void> getAddressFromLatLong(Position position) async {
     List<Placemark> placemarks =
         await placemarkFromCoordinates(position.latitude, position.longitude);
-    print(placemarks);
+    log(placemarks.toString());
     Placemark place = placemarks[0];
     getAddress =
         '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';

@@ -1,6 +1,8 @@
 // ignore_for_file: constant_identifier_names
 
 class ImgConstants {
+
+  //ONBOARDING
   static const String ONBOARDING1 = 'assets/images/onboarding1.svg';
   static const String ONBOARDING2 = 'assets/images/onboarding2.svg';
   static const String ONBOARDING3 = 'assets/images/onboarding3.svg';
@@ -21,5 +23,17 @@ class ImgConstants {
   static const String REFER_EARN2 = 'assets/images/ic_refer_share.png';
   static const String CAR_ICON = 'assets/images/car.png';
 
+  // Mobile Screen
+  static const String BACKGROUNG_IMAGE = 'assets/images/background_image.png';
+
+  // Markers for Mao
+  static const String MARKER_MAP = 'assets/images/markeruser.png';
+  static const String MARKER_MAP_DESTINATION = 'assets/images/marker2.png';
+  static const String MARKER_MAP_DESTINATION2 = 'assets/images/marker3.png';
+
+  // Promo Code
   
+  static const String PROMO_CODE2 = 'assets/images/promocoupon.png';
+
+   
 }

@@ -65,7 +65,6 @@ class _LocationCustomState extends State<LocationCustom> {
 
         if (!enabled) {
           AppSettings.openLocationSettings();
-
           // Navigator.pop(context);
         }
         //  else

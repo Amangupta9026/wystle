@@ -14,6 +14,10 @@ class ColorConstant {
   static const Color COLOR_ORIGINAL_GREY = Colors.grey;
   static const Color COLOR_LIGHT_GREEN = Color(0xFF6cd506);
   static const Color COLOR_TEXT = Color(0xFF0b152e);
+  static const Color BACKGROUND_COLOR = Color(0xFFe9eef4);
+  static const Color COLOR_LINEAR_TEXT = Color(0xFFebcea2);
+  static const Color COLOR_BLUE = Color(0xFF005ff9);
+  
 
   
 }

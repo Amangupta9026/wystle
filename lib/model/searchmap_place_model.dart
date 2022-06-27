@@ -6,22 +6,22 @@ class SearchModel {
 
   SearchModel.fromJson(Map<String, dynamic> json) {
     summary =
-        json['summary'] != null ? new Summary.fromJson(json['summary']) : null;
+        json['summary'] != null ? Summary.fromJson(json['summary']) : null;
     if (json['results'] != null) {
       results = <Results>[];
       json['results'].forEach((v) {
-        results!.add(new Results.fromJson(v));
+        results!.add(Results.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.summary != null) {
-      data['summary'] = this.summary!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (summary != null) {
+      data['summary'] = summary!.toJson();
     }
-    if (this.results != null) {
-      data['results'] = this.results!.map((v) => v.toJson()).toList();
+    if (results != null) {
+      data['results'] = results!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -56,20 +56,20 @@ class Summary {
     totalResults = json['totalResults'];
     fuzzyLevel = json['fuzzyLevel'];
     geoBias =
-        json['geoBias'] != null ? new GeoBias.fromJson(json['geoBias']) : null;
+        json['geoBias'] != null ? GeoBias.fromJson(json['geoBias']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['query'] = this.query;
-    data['queryType'] = this.queryType;
-    data['queryTime'] = this.queryTime;
-    data['numResults'] = this.numResults;
-    data['offset'] = this.offset;
-    data['totalResults'] = this.totalResults;
-    data['fuzzyLevel'] = this.fuzzyLevel;
-    if (this.geoBias != null) {
-      data['geoBias'] = this.geoBias!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['query'] = query;
+    data['queryType'] = queryType;
+    data['queryTime'] = queryTime;
+    data['numResults'] = numResults;
+    data['offset'] = offset;
+    data['totalResults'] = totalResults;
+    data['fuzzyLevel'] = fuzzyLevel;
+    if (geoBias != null) {
+      data['geoBias'] = geoBias!.toJson();
     }
     return data;
   }
@@ -87,9 +87,9 @@ class GeoBias {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['lat'] = this.lat;
-    data['lon'] = this.lon;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['lat'] = lat;
+    data['lon'] = lon;
     return data;
   }
 }
@@ -130,58 +130,58 @@ class Results {
     score = json['score'];
     dist = json['dist'];
     info = json['info'];
-    poi = json['poi'] != null ? new Poi.fromJson(json['poi']) : null;
+    poi = json['poi'] != null ? Poi.fromJson(json['poi']) : null;
     address =
-        json['address'] != null ? new Address.fromJson(json['address']) : null;
+        json['address'] != null ? Address.fromJson(json['address']) : null;
     position = json['position'] != null
-        ? new GeoBias.fromJson(json['position'])
+        ? GeoBias.fromJson(json['position'])
         : null;
     viewport = json['viewport'] != null
-        ? new Viewport.fromJson(json['viewport'])
+        ? Viewport.fromJson(json['viewport'])
         : null;
     if (json['entryPoints'] != null) {
       entryPoints = <EntryPoints>[];
       json['entryPoints'].forEach((v) {
-        entryPoints!.add(new EntryPoints.fromJson(v));
+        entryPoints!.add(EntryPoints.fromJson(v));
       });
     }
     entityType = json['entityType'];
     boundingBox = json['boundingBox'] != null
-        ? new Viewport.fromJson(json['boundingBox'])
+        ? Viewport.fromJson(json['boundingBox'])
         : null;
     dataSources = json['dataSources'] != null
-        ? new DataSources.fromJson(json['dataSources'])
+        ? DataSources.fromJson(json['dataSources'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['type'] = this.type;
-    data['id'] = this.id;
-    data['score'] = this.score;
-    data['dist'] = this.dist;
-    data['info'] = this.info;
-    if (this.poi != null) {
-      data['poi'] = this.poi!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['type'] = type;
+    data['id'] = id;
+    data['score'] = score;
+    data['dist'] = dist;
+    data['info'] = info;
+    if (poi != null) {
+      data['poi'] = poi!.toJson();
     }
-    if (this.address != null) {
-      data['address'] = this.address!.toJson();
+    if (address != null) {
+      data['address'] = address!.toJson();
     }
-    if (this.position != null) {
-      data['position'] = this.position!.toJson();
+    if (position != null) {
+      data['position'] = position!.toJson();
     }
-    if (this.viewport != null) {
-      data['viewport'] = this.viewport!.toJson();
+    if (viewport != null) {
+      data['viewport'] = viewport!.toJson();
     }
-    if (this.entryPoints != null) {
-      data['entryPoints'] = this.entryPoints!.map((v) => v.toJson()).toList();
+    if (entryPoints != null) {
+      data['entryPoints'] = entryPoints!.map((v) => v.toJson()).toList();
     }
-    data['entityType'] = this.entityType;
-    if (this.boundingBox != null) {
-      data['boundingBox'] = this.boundingBox!.toJson();
+    data['entityType'] = entityType;
+    if (boundingBox != null) {
+      data['boundingBox'] = boundingBox!.toJson();
     }
-    if (this.dataSources != null) {
-      data['dataSources'] = this.dataSources!.toJson();
+    if (dataSources != null) {
+      data['dataSources'] = dataSources!.toJson();
     }
     return data;
   }
@@ -207,29 +207,29 @@ class Poi {
     if (json['categorySet'] != null) {
       categorySet = <CategorySet>[];
       json['categorySet'].forEach((v) {
-        categorySet!.add(new CategorySet.fromJson(v));
+        categorySet!.add(CategorySet.fromJson(v));
       });
     }
     categories = json['categories'].cast<String>();
     if (json['classifications'] != null) {
       classifications = <Classifications>[];
       json['classifications'].forEach((v) {
-        classifications!.add(new Classifications.fromJson(v));
+        classifications!.add(Classifications.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['phone'] = this.phone;
-    if (this.categorySet != null) {
-      data['categorySet'] = this.categorySet!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['phone'] = phone;
+    if (categorySet != null) {
+      data['categorySet'] = categorySet!.map((v) => v.toJson()).toList();
     }
-    data['categories'] = this.categories;
-    if (this.classifications != null) {
+    data['categories'] = categories;
+    if (classifications != null) {
       data['classifications'] =
-          this.classifications!.map((v) => v.toJson()).toList();
+          classifications!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -245,8 +245,8 @@ class CategorySet {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
     return data;
   }
 }
@@ -262,16 +262,16 @@ class Classifications {
     if (json['names'] != null) {
       names = <Names>[];
       json['names'].forEach((v) {
-        names!.add(new Names.fromJson(v));
+        names!.add(Names.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['code'] = this.code;
-    if (this.names != null) {
-      data['names'] = this.names!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['code'] = code;
+    if (names != null) {
+      data['names'] = names!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -289,9 +289,9 @@ class Names {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['nameLocale'] = this.nameLocale;
-    data['name'] = this.name;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['nameLocale'] = nameLocale;
+    data['name'] = name;
     return data;
   }
 }
@@ -337,18 +337,18 @@ class Address {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['streetName'] = this.streetName;
-    data['municipalitySubdivision'] = this.municipalitySubdivision;
-    data['municipality'] = this.municipality;
-    data['countrySecondarySubdivision'] = this.countrySecondarySubdivision;
-    data['countrySubdivision'] = this.countrySubdivision;
-    data['postalCode'] = this.postalCode;
-    data['countryCode'] = this.countryCode;
-    data['country'] = this.country;
-    data['countryCodeISO3'] = this.countryCodeISO3;
-    data['freeformAddress'] = this.freeformAddress;
-    data['localName'] = this.localName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['streetName'] = streetName;
+    data['municipalitySubdivision'] = municipalitySubdivision;
+    data['municipality'] = municipality;
+    data['countrySecondarySubdivision'] = countrySecondarySubdivision;
+    data['countrySubdivision'] = countrySubdivision;
+    data['postalCode'] = postalCode;
+    data['countryCode'] = countryCode;
+    data['country'] = country;
+    data['countryCodeISO3'] = countryCodeISO3;
+    data['freeformAddress'] = freeformAddress;
+    data['localName'] = localName;
     return data;
   }
 }
@@ -361,20 +361,20 @@ class Viewport {
 
   Viewport.fromJson(Map<String, dynamic> json) {
     topLeftPoint = json['topLeftPoint'] != null
-        ? new GeoBias.fromJson(json['topLeftPoint'])
+        ? GeoBias.fromJson(json['topLeftPoint'])
         : null;
     btmRightPoint = json['btmRightPoint'] != null
-        ? new GeoBias.fromJson(json['btmRightPoint'])
+        ? GeoBias.fromJson(json['btmRightPoint'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.topLeftPoint != null) {
-      data['topLeftPoint'] = this.topLeftPoint!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (topLeftPoint != null) {
+      data['topLeftPoint'] = topLeftPoint!.toJson();
     }
-    if (this.btmRightPoint != null) {
-      data['btmRightPoint'] = this.btmRightPoint!.toJson();
+    if (btmRightPoint != null) {
+      data['btmRightPoint'] = btmRightPoint!.toJson();
     }
     return data;
   }
@@ -389,15 +389,15 @@ class EntryPoints {
   EntryPoints.fromJson(Map<String, dynamic> json) {
     type = json['type'];
     position = json['position'] != null
-        ? new GeoBias.fromJson(json['position'])
+        ? GeoBias.fromJson(json['position'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['type'] = this.type;
-    if (this.position != null) {
-      data['position'] = this.position!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['type'] = type;
+    if (position != null) {
+      data['position'] = position!.toJson();
     }
     return data;
   }
@@ -410,14 +410,14 @@ class DataSources {
 
   DataSources.fromJson(Map<String, dynamic> json) {
     geometry = json['geometry'] != null
-        ? new Geometry.fromJson(json['geometry'])
+        ? Geometry.fromJson(json['geometry'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.geometry != null) {
-      data['geometry'] = this.geometry!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (geometry != null) {
+      data['geometry'] = geometry!.toJson();
     }
     return data;
   }
@@ -433,8 +433,8 @@ class Geometry {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
     return data;
   }
 }

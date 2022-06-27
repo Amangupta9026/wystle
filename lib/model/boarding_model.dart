@@ -43,7 +43,7 @@ class ObPosterDetail {
   String? posterImage;
   String? posterLabel;
   String? posterContent;
-  String? poster_bg_color;
+  String? posterbgColor;
 
   ObPosterDetail(
       {this.id,
@@ -56,7 +56,7 @@ class ObPosterDetail {
       this.posterImage,
       this.posterLabel,
       this.posterContent,
-      this.poster_bg_color});
+      this.posterbgColor});
 
   ObPosterDetail.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -69,7 +69,7 @@ class ObPosterDetail {
     posterImage = json['poster_image'];
     posterLabel = json['poster_label'];
     posterContent = json['poster_content'];
-    poster_bg_color = json['poster_bg_color'];
+    posterbgColor = json['posterbgColor'];
   }
 
   Map<String, dynamic> toJson() {
@@ -84,7 +84,7 @@ class ObPosterDetail {
     data['poster_image'] = posterImage;
     data['poster_label'] = posterLabel;
     data['poster_content'] = posterContent;
-    data['poster_bg_color'] = poster_bg_color;
+    data['posterbgColor'] = posterbgColor;
     return data;
   }
 }

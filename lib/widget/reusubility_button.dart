@@ -26,7 +26,7 @@ class MaterialButton1 extends StatelessWidget {
       height: height1,
       width: width1,
       decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(30.0)),
+        // borderRadius: const BorderRadius.all(Radius.circular(10.0)),
         color: color1 ?? ColorConstant.COLOR_LIGHT_BLACK,
       ),
       child: Center(
@@ -35,19 +35,18 @@ class MaterialButton1 extends StatelessWidget {
           children: [
             if (icon1 != null) ...{
               const Spacer(),
-             const Padding(
-                padding:  EdgeInsets.only(left: 30),
+              const Padding(
+                padding: EdgeInsets.only(left: 30),
                 child: SizedBox(),
               ),
             },
             Text(
               txt1.toString(),
               textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 20,
-                  fontFamily: "Sofia",
-                  color: textColor1 ?? Colors.white),
+              style: Theme.of(context).textTheme.headline6?.copyWith(
+                    color: ColorConstant.COLOR_WHITE,
+                    fontWeight: FontWeight.w500,
+                  ),
             ),
             if (icon1 != null) ...{
               const Spacer(),
@@ -158,6 +157,70 @@ class TextFieldWithLabel extends StatelessWidget {
                 borderSide: BorderSide(color: ColorConstant.COLOR_LIGHT_BLACK)),
             border: const OutlineInputBorder(borderSide: BorderSide()),
           )),
+    );
+  }
+}
+
+// TextField only hint
+
+class TextFieldWithOnlyPlaceHolder extends StatelessWidget {
+  final String? text1;
+  final TextInputType? keyboardType1;
+  final TextEditingController? controller1;
+  final bool? enabledTextField;
+  final int? minlines;
+  final int? maxlines;
+  const TextFieldWithOnlyPlaceHolder(
+      {Key? key,
+      this.text1,
+      this.controller1,
+      this.keyboardType1,
+      this.enabledTextField,
+      this.minlines,
+      this.maxlines})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      elevation: 2.0,
+      shadowColor: ColorConstant.COLOR_ORIGINAL_GREY,
+
+      //  padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+      child: TextFormField(
+        style: Theme.of(context).textTheme.subtitle1?.copyWith(
+              color: ColorConstant.COLOR_BLACK,
+              fontWeight: FontWeight.w400,
+              decoration: TextDecoration.none,
+            ),
+        controller: controller1,
+        cursorColor: ColorConstant.COLOR_LIGHT_BLACK,
+        minLines: minlines ?? 1,
+        maxLines: maxlines ?? 1,
+        keyboardType: keyboardType1 ?? TextInputType.name,
+        decoration: InputDecoration(
+          enabled: enabledTextField ?? true,
+          hintText: text1.toString(),
+          hintStyle: Theme.of(context).textTheme.subtitle1?.copyWith(
+                color: ColorConstant.COLOR_ORIGINAL_GREY,
+                fontWeight: FontWeight.w500,
+              ),
+          focusedBorder: const OutlineInputBorder(
+            borderSide:
+                BorderSide(width: 1, color: ColorConstant.COLOR_LIGHT_BLACK),
+            borderRadius: BorderRadius.all(
+              Radius.circular(0.0),
+            ),
+          ),
+          border: const OutlineInputBorder(
+            borderSide:
+                BorderSide(width: 0.3, color: ColorConstant.COLOR_LIGHT_BLACK),
+            borderRadius: BorderRadius.all(
+              Radius.circular(0.0),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

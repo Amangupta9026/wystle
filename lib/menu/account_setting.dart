@@ -139,7 +139,7 @@ class _AccountSettingState extends State<AccountSetting> {
                           decoration: const BoxDecoration(
                               color: ColorConstant.COLOR_LIGHT_DARK_GREY,
                               shape: BoxShape.circle),
-                          child: Icon(Icons.home),
+                          child: const Icon(Icons.home),
                         ),
                         const SizedBox(
                           width: 20,
@@ -165,7 +165,7 @@ class _AccountSettingState extends State<AccountSetting> {
                           decoration: const BoxDecoration(
                               color: ColorConstant.COLOR_LIGHT_DARK_GREY,
                               shape: BoxShape.circle),
-                          child: Icon(Icons.work),
+                          child: const Icon(Icons.work),
                         ),
                         const SizedBox(
                           width: 20,
@@ -234,7 +234,7 @@ class _AccountSettingState extends State<AccountSetting> {
                           decoration: const BoxDecoration(
                               color: ColorConstant.COLOR_LIGHT_DARK_GREY,
                               shape: BoxShape.circle),
-                          child: Icon(Icons.new_label_rounded),
+                          child: const Icon(Icons.new_label_rounded),
                         ),
                         const SizedBox(
                           width: 20,

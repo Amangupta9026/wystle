@@ -7,8 +7,7 @@ import "package:flutter_map/flutter_map.dart";
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
-import 'package:wystle/module/sharedpreference/shared_preference.dart';
-import 'package:wystle/service/api_constants.dart';
+
 import 'map.dart';
 
 // ignore: must_be_immutable
@@ -121,10 +120,8 @@ if(mounted) {
                       width: 80.0,
                       height: 80.0,
                       point: startLocation,
-                      builder: (ctx) => Container(
-                        child: const Icon(Icons.location_on,
-                            size: 40.0, color: Colors.blue),
-                      ),
+                      builder: (ctx) => const Icon(Icons.location_on,
+                          size: 40.0, color: Colors.blue),
                     ),
                     // Marker(
                     //   width: 80.0,

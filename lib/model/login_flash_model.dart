@@ -13,21 +13,21 @@ class LoginFlashModel {
     if (json['login_flash_detail'] != null) {
       loginFlashDetail = <LoginFlashDetail>[];
       json['login_flash_detail'].forEach((v) {
-        loginFlashDetail!.add(new LoginFlashDetail.fromJson(v));
+        loginFlashDetail!.add( LoginFlashDetail.fromJson(v));
       });
     }
     responsecode = json['responsecode'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
-    if (this.loginFlashDetail != null) {
+    final Map<String, dynamic> data =  <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
+    if (loginFlashDetail != null) {
       data['login_flash_detail'] =
-          this.loginFlashDetail!.map((v) => v.toJson()).toList();
+          loginFlashDetail!.map((v) => v.toJson()).toList();
     }
-    data['responsecode'] = this.responsecode;
+    data['responsecode'] = responsecode;
     return data;
   }
 }
@@ -79,20 +79,20 @@ class LoginFlashDetail {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['from_date'] = this.fromDate;
-    data['to_date'] = this.toDate;
-    data['countryid'] = this.countryid;
-    data['country_name'] = this.countryName;
-    data['stateid'] = this.stateid;
-    data['state_name'] = this.stateName;
-    data['cityid'] = this.cityid;
-    data['city_name'] = this.cityName;
-    data['login_flash_image'] = this.loginFlashImage;
-    data['login_flash_label'] = this.loginFlashLabel;
-    data['login_flash_content'] = this.loginFlashContent;
-    data['login_flash_bg_color'] = this.loginFlashBgColor;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['from_date'] = fromDate;
+    data['to_date'] = toDate;
+    data['countryid'] = countryid;
+    data['country_name'] = countryName;
+    data['stateid'] = stateid;
+    data['state_name'] = stateName;
+    data['cityid'] = cityid;
+    data['city_name'] = cityName;
+    data['login_flash_image'] = loginFlashImage;
+    data['login_flash_label'] = loginFlashLabel;
+    data['login_flash_content'] = loginFlashContent;
+    data['login_flash_bg_color'] = loginFlashBgColor;
     return data;
   }
 }

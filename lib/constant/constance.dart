@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class OtherConstants {
-  static final Color whiteFontColor = Colors.white;
-  static final Color buttonColor = Color(0xff317E2F);
+  static const Color whiteFontColor = Colors.white;
+  static const  Color buttonColor = Color(0xff317E2F);
   List<String> colors = [
     '#EB1165',
     '#32a852',

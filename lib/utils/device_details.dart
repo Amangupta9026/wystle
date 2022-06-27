@@ -8,11 +8,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-
 
 class DeviceDetail extends StatefulWidget {
   const DeviceDetail({Key? key}) : super(key: key);
@@ -35,22 +32,10 @@ class _DeviceDetailState extends State<DeviceDetail> {
     var deviceData = <String, dynamic>{};
 
     try {
-      if (kIsWeb) {
-        deviceData = _readWebBrowserInfo(await deviceInfoPlugin.webBrowserInfo);
-      } else {
-        if (Platform.isAndroid) {
-          deviceData =
-              _readAndroidBuildData(await deviceInfoPlugin.androidInfo);
-        } else if (Platform.isIOS) {
-          deviceData = _readIosDeviceInfo(await deviceInfoPlugin.iosInfo);
-        } else if (Platform.isLinux) {
-          deviceData = _readLinuxDeviceInfo(await deviceInfoPlugin.linuxInfo);
-        } else if (Platform.isMacOS) {
-          deviceData = _readMacOsDeviceInfo(await deviceInfoPlugin.macOsInfo);
-        } else if (Platform.isWindows) {
-          deviceData =
-              _readWindowsDeviceInfo(await deviceInfoPlugin.windowsInfo);
-        }
+      if (Platform.isAndroid) {
+        deviceData = _readAndroidBuildData(await deviceInfoPlugin.androidInfo);
+      } else if (Platform.isIOS) {
+        deviceData = _readIosDeviceInfo(await deviceInfoPlugin.iosInfo);
       }
     } on PlatformException {
       deviceData = <String, dynamic>{
@@ -114,84 +99,17 @@ class _DeviceDetailState extends State<DeviceDetail> {
     };
   }
 
-  Map<String, dynamic> _readLinuxDeviceInfo(LinuxDeviceInfo data) {
-    return <String, dynamic>{
-      'name': data.name,
-      'version': data.version,
-      'id': data.id,
-      'idLike': data.idLike,
-      'versionCodename': data.versionCodename,
-      'versionId': data.versionId,
-      'prettyName': data.prettyName,
-      'buildId': data.buildId,
-      'variant': data.variant,
-      'variantId': data.variantId,
-      'machineId': data.machineId,
-    };
-  }
-
-  Map<String, dynamic> _readWebBrowserInfo(WebBrowserInfo data) {
-    return <String, dynamic>{
-      'browserName': describeEnum(data.browserName),
-      'appCodeName': data.appCodeName,
-      'appName': data.appName,
-      'appVersion': data.appVersion,
-      'deviceMemory': data.deviceMemory,
-      'language': data.language,
-      'languages': data.languages,
-      'platform': data.platform,
-      'product': data.product,
-      'productSub': data.productSub,
-      'userAgent': data.userAgent,
-      'vendor': data.vendor,
-      'vendorSub': data.vendorSub,
-      'hardwareConcurrency': data.hardwareConcurrency,
-      'maxTouchPoints': data.maxTouchPoints,
-    };
-  }
-
-  Map<String, dynamic> _readMacOsDeviceInfo(MacOsDeviceInfo data) {
-    return <String, dynamic>{
-      'computerName': data.computerName,
-      'hostName': data.hostName,
-      'arch': data.arch,
-      'model': data.model,
-      'kernelVersion': data.kernelVersion,
-      'osRelease': data.osRelease,
-      'activeCPUs': data.activeCPUs,
-      'memorySize': data.memorySize,
-      'cpuFrequency': data.cpuFrequency,
-      'systemGUID': data.systemGUID,
-    };
-  }
-
-  Map<String, dynamic> _readWindowsDeviceInfo(WindowsDeviceInfo data) {
-    return <String, dynamic>{
-      'numberOfCores': data.numberOfCores,
-      'computerName': data.computerName,
-      'systemMemoryInMegabytes': data.systemMemoryInMegabytes,
-    };
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: Text(
-            kIsWeb
-                ? 'Web Browser info'
-                : Platform.isAndroid
-                    ? 'Android Device Info'
-                    : Platform.isIOS
-                        ? 'iOS Device Info'
-                        : Platform.isLinux
-                            ? 'Linux Device Info'
-                            : Platform.isMacOS
-                                ? 'MacOS Device Info'
-                                : Platform.isWindows
-                                    ? 'Windows Device Info'
-                                    : '',
+            Platform.isAndroid
+                ? 'Android Device Info'
+                : Platform.isIOS
+                    ? 'iOS Device Info'
+                    : '',
           ),
         ),
         body: ListView(

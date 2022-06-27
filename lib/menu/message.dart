@@ -66,7 +66,7 @@ class _MessagesState extends State<Messages> {
                           const Text(
                             "50% off on First Ride",
                             textAlign: TextAlign.center,
-                            style: const TextStyle(
+                            style:  TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w600,
                               color: ColorConstant.COLOR_BLACK,
@@ -80,7 +80,7 @@ class _MessagesState extends State<Messages> {
                           const Text(
                             "Get 50% cb up to Rs 75 on your first order. Use code: First50",
                             textAlign: TextAlign.center,
-                            style: const TextStyle(
+                            style:  TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                               color: ColorConstant.COLOR_ORIGINAL_GREY,
@@ -119,8 +119,8 @@ class _MessagesState extends State<Messages> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
+                        children:  const [
+                           Text(
                             "50% off with Amazon Pay",
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -129,10 +129,10 @@ class _MessagesState extends State<Messages> {
                               color: ColorConstant.COLOR_BLACK,
                             ),
                           ),
-                          const SizedBox(
+                           SizedBox(
                             height: 10,
                           ),
-                          const Text(
+                           Text(
                             "Get 50% cb up to Rs 75 on your first order. Use code: Amz50",
                             maxLines: 2,
                             textAlign: TextAlign.start,

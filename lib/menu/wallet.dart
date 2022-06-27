@@ -1,6 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:wystle/constant/color_constant.dart';
-import 'package:wystle/widget/reusubility_button.dart';
+import 'package:wystle/menu/add_card.dart';
 
 class Wallet extends StatefulWidget {
   const Wallet({Key? key}) : super(key: key);
@@ -53,7 +55,7 @@ class _WalletState extends State<Wallet> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          "Uber Cash",
+                          "Wallet Balance",
                           style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
@@ -180,6 +182,71 @@ class _WalletState extends State<Wallet> {
                 const SizedBox(
                   height: 20,
                 ),
+                Text(
+                  "Payments",
+                  style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                        color: ColorConstant.COLOR_BLACK,
+                        fontWeight: FontWeight.w600,
+                      ),
+                ),
+                const SizedBox(height: 20),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) =>  AddCard()),
+                    );
+                    // log('fff');
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: ColorConstant.COLOR_WHITE,
+                      boxShadow: [
+                        BoxShadow(
+                          color: ColorConstant.COLOR_ORIGINAL_GREY
+                              .withOpacity(0.3),
+                          offset: const Offset(0, 0),
+                          blurRadius: 3.0,
+                          spreadRadius: 2.0,
+                        ),
+                      ],
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(10.0, 15, 10, 15),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.credit_card,
+                            size: 26,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: Text(
+                              'Credit or Debit Card',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle1
+                                  ?.copyWith(
+                                    color: ColorConstant.COLOR_BLACK,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                            ),
+                          ),
+                          const Icon(
+                            Icons.add_circle,
+                            size: 26,
+                            color: ColorConstant.THEME_COLOR_RED,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
                 const Text(
                   "Ride Profile",
                   style: TextStyle(
@@ -198,7 +265,7 @@ class _WalletState extends State<Wallet> {
                       decoration: const BoxDecoration(
                           color: ColorConstant.COLOR_LIGHT_DARK_GREY,
                           shape: BoxShape.circle),
-                      child: Icon(Icons.person),
+                      child: const Icon(Icons.person),
                     ),
                     const SizedBox(
                       width: 20,
@@ -221,7 +288,7 @@ class _WalletState extends State<Wallet> {
                       decoration: const BoxDecoration(
                           color: ColorConstant.COLOR_LIGHT_DARK_GREY,
                           shape: BoxShape.circle),
-                      child: Icon(Icons.work),
+                      child: const Icon(Icons.work),
                     ),
                     const SizedBox(
                       width: 20,
@@ -254,76 +321,6 @@ class _WalletState extends State<Wallet> {
                 ),
                 const SizedBox(
                   height: 20,
-                ),
-                const Text(
-                  "Vouchers",
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: ColorConstant.COLOR_BLACK),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  children: [
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: const BoxDecoration(
-                          color: ColorConstant.COLOR_LIGHT_DARK_GREY,
-                          shape: BoxShape.circle),
-                      child: Icon(Icons.redeem),
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    const Text("Vouchers",
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: ColorConstant.COLOR_BLACK)),
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                const Divider(
-                  thickness: 1,
-                  color: ColorConstant.COLOR_LIGHT_DARK_GREY,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                const Text(
-                  "Promotions",
-                  style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: ColorConstant.COLOR_BLACK),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  children: [
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: const BoxDecoration(
-                          color: ColorConstant.COLOR_LIGHT_DARK_GREY,
-                          shape: BoxShape.circle),
-                      child: Icon(Icons.new_label_rounded),
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    const Text("Promotions",
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: ColorConstant.COLOR_BLACK)),
-                  ],
                 ),
               ],
             ),

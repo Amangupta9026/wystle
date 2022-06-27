@@ -3,7 +3,6 @@
 import 'dart:developer';
 import 'dart:typed_data';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_aws_s3_client/flutter_aws_s3_client.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -13,18 +12,15 @@ import 'package:location/location.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:wystle/auth/mobile_loginscreen.dart';
 import 'package:wystle/constant/image_constant.dart';
-import 'package:wystle/module/sharedpreference/shared_preference.dart';
-import 'package:wystle/service/api_constants.dart';
 import 'package:wystle/widget/reusubility_button.dart';
 
-import '../constant/color_constant.dart';
 import '../model/boarding_model.dart';
+import '../module/sharedpreference/shared_preference.dart';
+import '../service/api_constants.dart';
 import '../service/api_services.dart';
 import '../service/aws_service.dart';
 import '../utils/utils.dart';
 import '../widget/shimmer_effect_line.dart';
-import '../widget/shimmer_progress_widget.dart';
-import 'package:geocoding/geocoding.dart' as geocoding;
 
 class OnBoarding extends StatefulWidget {
   const OnBoarding({Key? key}) : super(key: key);
@@ -40,8 +36,8 @@ class _OnBoardingState extends State<OnBoarding> {
   BoardingModel? boardingModel;
   var location = Location();
   LocationData? _currentPosition;
-  LatLng _initialcameraposition = LatLng(0.5937, 0.9629);
-  String? _address, _dateTime;
+  LatLng initialcameraposition = LatLng(0.5937, 0.9629);
+  String? address, dateTime;
   double? latitude1;
   double? longitude1;
   bool isOnline = false;
@@ -121,26 +117,25 @@ class _OnBoardingState extends State<OnBoarding> {
     enabled = await location.serviceEnabled();
 
     _currentPosition = await location.getLocation();
-    _initialcameraposition = LatLng(_currentPosition!.latitude!.toDouble(),
+    initialcameraposition = LatLng(_currentPosition!.latitude!.toDouble(),
         _currentPosition!.longitude!.toDouble());
     location.onLocationChanged.listen((LocationData currentLocation) {
-      log("${currentLocation.latitude} : ${currentLocation.longitude}");
-      if(mounted)
-      {
+      // log("${currentLocation.latitude} : ${currentLocation.longitude}");
+      if (mounted) {
+        setState(() {
+          //
+          latitude1 = currentLocation.latitude;
+          longitude1 = currentLocation.longitude;
+          SharedPreference.setValue(PrefConstants.LATITUDE, latitude1.toString());
+          SharedPreference.setValue(PrefConstants.LONGITUDE, longitude1.toString());
+          
+          _currentPosition = currentLocation;
+          initialcameraposition = LatLng(_currentPosition!.latitude!.toDouble(),
+              _currentPosition!.longitude!.toDouble());
 
-      setState(() {
-        //
-        latitude1 = currentLocation.latitude;
-        longitude1 = currentLocation.longitude;
-        SharedPreference.setValue(PrefConstants.LATITUDE, latitude1.toString());
-        SharedPreference.setValue(PrefConstants.LATITUDE, latitude1.toString());
-        _currentPosition = currentLocation;
-        _initialcameraposition = LatLng(_currentPosition!.latitude!.toDouble(),
-            _currentPosition!.longitude!.toDouble());
-
-        DateTime now = DateTime.now();
-        _dateTime = DateFormat('EEE d MMM kk:mm:ss ').format(now);
-      });
+          DateTime now = DateTime.now();
+          dateTime = DateFormat('EEE d MMM kk:mm:ss ').format(now);
+        });
       }
     });
   }
@@ -150,9 +145,9 @@ class _OnBoardingState extends State<OnBoarding> {
     return Scaffold(
       // backgroundColor: ColorConstant.COLOR_WHITE,
       backgroundColor: boardingModel?.status == "true"
-          ? boardingModel?.obPosterDetail![0].poster_bg_color != null
+          ? boardingModel?.obPosterDetail![0].posterbgColor != null
               ? Color(int?.tryParse(
-                  "0xFF${boardingModel?.obPosterDetail?[0].poster_bg_color?.substring(1, boardingModel?.obPosterDetail?[0].poster_bg_color?.length)}")!)
+                  "0xFF${boardingModel?.obPosterDetail?[0].posterbgColor?.substring(1, boardingModel?.obPosterDetail?[0].posterbgColor?.length)}")!)
               : const Color(0xFFF5F5F5)
           : const Color(0xFFF5F5F5),
       body: SafeArea(
@@ -350,13 +345,13 @@ class _OnBoardingState extends State<OnBoarding> {
                 ),
               } else ...{
                 Padding(
-                  padding: const EdgeInsets.only(top: 60, left: 12.0, right: 12),
+                  padding:
+                      const EdgeInsets.only(top: 60, left: 12.0, right: 12),
                   child: ShimmerEffectLineByLine(
-                  width1: MediaQuery.of(context).size.width,
-                  height1: 56.0,
+                    width1: MediaQuery.of(context).size.width,
+                    height1: 56.0,
+                  ),
                 ),
-                ),
-                
               }
             }
 
@@ -417,7 +412,6 @@ class _OnBoardingState extends State<OnBoarding> {
                               longitude1: longitude1,
                             )),
                   );
-                  //    getLoc();
                 },
                 child: const Padding(
                   padding: EdgeInsets.only(top: 60, left: 12.0, right: 12),
@@ -456,7 +450,7 @@ class _OnBoardingState extends State<OnBoarding> {
     // }
 
     _currentPosition = await location.getLocation();
-    _initialcameraposition = LatLng(_currentPosition!.latitude!.toDouble(),
+    initialcameraposition = LatLng(_currentPosition!.latitude!.toDouble(),
         _currentPosition!.longitude!.toDouble());
     location.onLocationChanged.listen((LocationData currentLocation) {
       log("${currentLocation.latitude} : ${currentLocation.longitude}");
@@ -465,11 +459,11 @@ class _OnBoardingState extends State<OnBoarding> {
         latitude1 = currentLocation.latitude;
         longitude1 = currentLocation.longitude;
         _currentPosition = currentLocation;
-        _initialcameraposition = LatLng(_currentPosition!.latitude!.toDouble(),
+        initialcameraposition = LatLng(_currentPosition!.latitude!.toDouble(),
             _currentPosition!.longitude!.toDouble());
 
         DateTime now = DateTime.now();
-        _dateTime = DateFormat('EEE d MMM kk:mm:ss ').format(now);
+        dateTime = DateFormat('EEE d MMM kk:mm:ss ').format(now);
         // _getAddress(_currentPosition!.latitude!, _currentPosition!.longitude!)
         //     .then((value) {
         //   setState(() {
