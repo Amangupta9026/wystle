@@ -53,7 +53,8 @@ class _LoginFlashScreenState extends State<LoginFlashScreen> {
         "userid": userdata.userid,
         "country": "United Kingdom",
         "state": "England",
-        "city": "City of London"
+        "district": "Greater London",
+        "city": "London"
       };
       loginFlashModel = await APIServices.getLoginFlashAPI(_body);
       fetchAWS3Image(

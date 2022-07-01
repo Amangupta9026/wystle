@@ -34,6 +34,7 @@ class ImgConstants {
   // Promo Code
   
   static const String PROMO_CODE2 = 'assets/images/promocoupon.png';
+  static const String PERSON_ICON = 'assets/images/person_icon.png';
 
    
 }

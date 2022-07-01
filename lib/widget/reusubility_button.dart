@@ -43,9 +43,9 @@ class MaterialButton1 extends StatelessWidget {
             Text(
               txt1.toString(),
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline6?.copyWith(
+              style: Theme.of(context).textTheme.subtitle1?.copyWith(
                     color: ColorConstant.COLOR_WHITE,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w400,
                   ),
             ),
             if (icon1 != null) ...{
@@ -183,7 +183,7 @@ class TextFieldWithOnlyPlaceHolder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      elevation: 2.0,
+      elevation: 1.0,
       shadowColor: ColorConstant.COLOR_ORIGINAL_GREY,
 
       //  padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
@@ -199,11 +199,12 @@ class TextFieldWithOnlyPlaceHolder extends StatelessWidget {
         maxLines: maxlines ?? 1,
         keyboardType: keyboardType1 ?? TextInputType.name,
         decoration: InputDecoration(
+          isDense: true,
           enabled: enabledTextField ?? true,
           hintText: text1.toString(),
           hintStyle: Theme.of(context).textTheme.subtitle1?.copyWith(
                 color: ColorConstant.COLOR_ORIGINAL_GREY,
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w400,
               ),
           focusedBorder: const OutlineInputBorder(
             borderSide:
@@ -224,3 +225,12 @@ class TextFieldWithOnlyPlaceHolder extends StatelessWidget {
     );
   }
 }
+
+// class TextFormField extends StatelessWidget {
+//   const TextFormField({Key? key}) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container();
+//   }
+// }

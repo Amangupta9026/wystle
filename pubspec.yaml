@@ -69,6 +69,11 @@ dependencies:
   firebase_in_app_messaging: ^0.6.0+16
   firebase_analytics: ^9.1.10
   fluttertoast: ^8.0.9
+  flutter_masked_text2: ^0.9.1
+  flutter_neumorphic: ^3.2.0
+  pay: ^1.0.10
+  flutterwave: ^1.0.1
+  stop_watch_timer: ^1.5.0
   
   
   

@@ -72,7 +72,6 @@ class _MobileLoginScreenState extends State<MobileLoginScreen> {
   Future<void> _deviceDetails() async {
     final ipv4 = await Ipify.ipv4();
     SharedPreference.setValue(PrefConstants.IP_ADDRESS, ipv4);
-    
 
     final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
     try {

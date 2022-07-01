@@ -3,6 +3,7 @@ import 'package:wystle/constant/image_constant.dart';
 import 'package:wystle/menu/help.dart';
 import 'package:wystle/menu/message.dart';
 import 'package:wystle/menu/refer_earn.dart';
+import 'package:wystle/menu/rewards.dart';
 import 'package:wystle/menu/wallet.dart';
 
 import '../../constant/color_constant.dart';
@@ -135,23 +136,23 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       const SizedBox(
                         height: 25,
                       ),
-                      customRow(
-                        "Your Rides",
-                        Image.asset(ImgConstants.CONTRACT_ICON,
-                            width: 28.0, height: 28.0),
-                        // FontAwesomeIcons.moon,
-                        () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const MenuProfile(),
-                            ),
-                          );
-                        },
-                      ),
-                      const SizedBox(
-                        height: 25,
-                      ),
+                      // customRow(
+                      //   "Your Rides",
+                      //   Image.asset(ImgConstants.CONTRACT_ICON,
+                      //       width: 28.0, height: 28.0),
+                      //   // FontAwesomeIcons.moon,
+                      //   () {
+                      //     Navigator.push(
+                      //       context,
+                      //       MaterialPageRoute(
+                      //         builder: (context) => const MenuProfile(),
+                      //       ),
+                      //     );
+                      //   },
+                      // ),
+                      // const SizedBox(
+                      //   height: 25,
+                      // ),
                       customRow(
                         "Wallet",
                         Image.asset(ImgConstants.CONTRACT_ICON,
@@ -196,7 +197,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => Notifications(),
+                              builder: (context) => const Notifications(),
                             ),
                           );
                         },
@@ -281,7 +282,24 @@ class _DrawerScreenState extends State<DrawerScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>  CouponScreen(),
+                              builder: (context) => CouponScreen(),
+                            ),
+                          );
+                        },
+                      ),
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      customRow(
+                        "Rewards",
+                        Image.asset(ImgConstants.CONTRACT_ICON,
+                            width: 28.0, height: 28.0),
+                        // FontAwesomeIcons.moon,
+                        () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Rewards(),
                             ),
                           );
                         },

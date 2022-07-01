@@ -1,55 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-
+import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import '../constant/color_constant.dart';
+import '../widget/appbar_widget.dart';
 import '../widget/reusubility_button.dart';
+import '../widget/toast_widget.dart';
 
-class AddCard extends StatelessWidget {
-  final TextEditingController _controller = TextEditingController();
-  AddCard({Key? key}) : super(key: key);
+class AddCard extends StatefulWidget {
+  const AddCard({Key? key}) : super(key: key);
+
+  @override
+  State<AddCard> createState() => _AddCardState();
+}
+
+class _AddCardState extends State<AddCard> {
+  TextEditingController controller = TextEditingController();
+
+  // TextEditingController expiryDateController = TextEditingController();
+  var expiryDateController = MaskedTextController(mask: '00/00');
+  var cvvController = MaskedTextController(mask: '000');
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorConstant.COLOR_WHITE,
-      appBar: AppBar(
-        backgroundColor: ColorConstant.COLOR_WHITE,
-        elevation: 0,
-        leading: Padding(
-          padding: const EdgeInsets.fromLTRB(25.0, 20, 0, 0),
-          child: InkWell(
-            onTap: () => Navigator.pop(context),
-            child: const Icon(
-              Icons.arrow_back_ios,
-              size: 18,
-              color: ColorConstant.COLOR_BLACK,
-            ),
-          ),
-        ),
-      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(35.0, 20, 35, 30),
+            padding: const EdgeInsets.fromLTRB(35.0, 30, 35, 30),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Add Card',
-                  style: Theme.of(context).textTheme.headline6?.copyWith(
-                        color: ColorConstant.COLOR_BLACK,
-                        fontWeight: FontWeight.w700,
-                      ),
+                const AppBarWidget(
+                  text1: 'Add Card',
                 ),
                 const SizedBox(
-                  height: 30,
+                  height: 20,
                 ),
                 Text(
                   'Card holder name',
                   style: Theme.of(context).textTheme.subtitle1?.copyWith(
                         color: ColorConstant.COLOR_BLACK,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w400,
                       ),
                 ),
                 const SizedBox(
@@ -67,7 +58,7 @@ class AddCard extends StatelessWidget {
                   'Card number',
                   style: Theme.of(context).textTheme.subtitle1?.copyWith(
                         color: ColorConstant.COLOR_BLACK,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w400,
                       ),
                 ),
                 const SizedBox(
@@ -96,54 +87,129 @@ class AddCard extends StatelessWidget {
                             style:
                                 Theme.of(context).textTheme.subtitle1?.copyWith(
                                       color: ColorConstant.COLOR_BLACK,
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.w400,
                                     ),
                           ),
                           const SizedBox(
                             height: 10,
                           ),
-                          TextFormField(
-                            controller: _controller, //<-- Add controller here
-                            onChanged: (value) {
-                              //   if (value.length == 2)
-                              //     _controller.text +=
-                              //         "/"; //<-- Automatically show a '/' after dd
-                              //   //  donation.date = value;
-                            },
+                          // const SizedBox(
+                          // height: 50,
+                          //   child: TextFieldWithOnlyPlaceHolder(
+                          //     // controller1: subjectController,
+                          //     text1: 'Expiry Date',
+                          //     keyboardType1: TextInputType.number,
+                          //   ),
+                          // ),
+
+                          SizedBox(
+                            height: 50,
+                            child: Material(
+                              elevation: 2.0,
+                              shadowColor: ColorConstant.COLOR_ORIGINAL_GREY,
+
+                              //  padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                              child: TextFormField(
+                                controller: expiryDateController,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle1
+                                    ?.copyWith(
+                                      color: ColorConstant.COLOR_BLACK,
+                                      fontWeight: FontWeight.w400,
+                                      decoration: TextDecoration.none,
+                                    ),
+                                cursorColor: ColorConstant.COLOR_LIGHT_BLACK,
+                                minLines: 1,
+                                maxLines: 1,
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                  enabled: true,
+                                  hintText: 'MM/YY',
+                                  hintStyle: Theme.of(context)
+                                      .textTheme
+                                      .subtitle1
+                                      ?.copyWith(
+                                        color:
+                                            ColorConstant.COLOR_ORIGINAL_GREY,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                  focusedBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        width: 1,
+                                        color: ColorConstant.COLOR_LIGHT_BLACK),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(0.0),
+                                    ),
+                                  ),
+                                  border: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        width: 0.3,
+                                        color: ColorConstant.COLOR_LIGHT_BLACK),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(0.0),
+                                    ),
+                                  ),
+                                ),
+                                onChanged: (value) {
+                                  if (value.length == 2) {
+                                    expiryDateController.text += "/";
+                                    expiryDateController.text = value;
+                                  }
+                                },
+                              ),
+                            ),
                           ),
                         ],
                       ),
                     ),
                     const SizedBox(
-                      width: 10,
+                      width: 20,
                     ),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Expiry Date',
+                            'CVV',
                             style:
                                 Theme.of(context).textTheme.subtitle1?.copyWith(
                                       color: ColorConstant.COLOR_BLACK,
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.w400,
                                     ),
                           ),
                           const SizedBox(
                             height: 10,
                           ),
-                          const SizedBox(
-                            height: 40,
+                          SizedBox(
+                            height: 50,
                             child: TextFieldWithOnlyPlaceHolder(
-                              // controller1: subjectController,
-                              text1: 'Subject',
-                              keyboardType1: TextInputType.text,
+                              controller1: cvvController,
+                              text1: 'CVV',
+                              keyboardType1: TextInputType.number,
                             ),
                           ),
                         ],
                       ),
                     )
                   ],
+                ),
+
+                // Save Button
+
+                const SizedBox(
+                  height: 30,
+                ),
+
+                InkWell(
+                  onTap: () {
+                    showDefaultSnackbar(context, 'Card Added Successfully');
+                  },
+                  child: const MaterialButton1(
+                    height1: 48,
+                    txt1: 'SAVE',
+                    color1: ColorConstant.THEME_COLOR_RED,
+                  ),
                 )
               ],
             ),

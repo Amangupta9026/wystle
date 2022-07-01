@@ -38,12 +38,14 @@ class ObPosterDetail {
   String? countryName;
   String? stateid;
   String? stateName;
+  String? districtid;
+  String? districtName;
   String? cityid;
   String? cityName;
   String? posterImage;
   String? posterLabel;
   String? posterContent;
-  String? posterbgColor;
+  String? posterBgColor;
 
   ObPosterDetail(
       {this.id,
@@ -51,12 +53,14 @@ class ObPosterDetail {
       this.countryName,
       this.stateid,
       this.stateName,
+      this.districtid,
+      this.districtName,
       this.cityid,
       this.cityName,
       this.posterImage,
       this.posterLabel,
       this.posterContent,
-      this.posterbgColor});
+      this.posterBgColor});
 
   ObPosterDetail.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -64,12 +68,14 @@ class ObPosterDetail {
     countryName = json['country_name'];
     stateid = json['stateid'];
     stateName = json['state_name'];
+    districtid = json['districtid'];
+    districtName = json['district_name'];
     cityid = json['cityid'];
     cityName = json['city_name'];
     posterImage = json['poster_image'];
     posterLabel = json['poster_label'];
     posterContent = json['poster_content'];
-    posterbgColor = json['posterbgColor'];
+    posterBgColor = json['poster_bg_color'];
   }
 
   Map<String, dynamic> toJson() {
@@ -79,12 +85,14 @@ class ObPosterDetail {
     data['country_name'] = countryName;
     data['stateid'] = stateid;
     data['state_name'] = stateName;
+    data['districtid'] = districtid;
+    data['district_name'] = districtName;
     data['cityid'] = cityid;
     data['city_name'] = cityName;
     data['poster_image'] = posterImage;
     data['poster_label'] = posterLabel;
     data['poster_content'] = posterContent;
-    data['posterbgColor'] = posterbgColor;
+    data['poster_bg_color'] = posterBgColor;
     return data;
   }
 }

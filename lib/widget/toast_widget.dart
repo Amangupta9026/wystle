@@ -1,15 +1,14 @@
-// import 'package:flutter/material.dart';
-// import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:wystle/constant/color_constant.dart';
 
-// class FlutterToast {
-//   static void showDefaultSnackbar(BuildContext context, content) {
-//     Fluttertoast.showToast(
-//         msg: "This is Center Short Toast",
-//         toastLength: Toast.LENGTH_SHORT,
-//         gravity: ToastGravity.CENTER,
-//         timeInSecForIosWeb: 1,
-//         backgroundColor: Colors.red,
-//         textColor: Colors.white,
-//         fontSize: 16.0);
-//   }
-// }
+void showDefaultSnackbar(BuildContext context, content) {
+  Fluttertoast.showToast(
+      msg: content,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: ColorConstant.COLOR_BLACK,
+      textColor: Colors.white,
+      fontSize: 14.0);
+}

@@ -23,8 +23,9 @@ class _ReferEarnState extends State<ReferEarn> {
             Navigator.pop(context);
           },
           child: const Icon(
-            Icons.arrow_back,
+            Icons.arrow_back_ios,
             color: ColorConstant.COLOR_BLACK,
+            size: 16,
           ),
         ),
         title: Text(

@@ -1,10 +1,10 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:wystle/constant/color_constant.dart';
 import 'package:wystle/constant/image_constant.dart';
 
+import '../widget/appbar_widget.dart';
 import '../widget/reusubility_button.dart';
+import '../widget/toast_widget.dart';
 
 class CouponScreen extends StatelessWidget {
   CouponScreen({Key? key}) : super(key: key);
@@ -14,34 +14,15 @@ class CouponScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorConstant.COLOR_WHITE,
-      appBar: AppBar(
-        backgroundColor: ColorConstant.COLOR_WHITE,
-        elevation: 0,
-        leading: Padding(
-          padding: const EdgeInsets.fromLTRB(25.0, 20, 0, 0),
-          child: InkWell(
-            onTap: () => Navigator.pop(context),
-            child: const Icon(
-              Icons.arrow_back_ios,
-              size: 18,
-              color: ColorConstant.COLOR_BLACK,
-            ),
-          ),
-        ),
-      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(30.0, 20, 30, 30),
+            padding: const EdgeInsets.fromLTRB(30.0, 30, 30, 30),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Coupons',
-                  style: Theme.of(context).textTheme.headline5?.copyWith(
-                        color: ColorConstant.COLOR_BLACK,
-                        fontWeight: FontWeight.w500,
-                      ),
+                const AppBarWidget(
+                  text1: 'Coupons',
                 ),
                 const SizedBox(
                   height: 20,
@@ -63,14 +44,7 @@ class CouponScreen extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
-                        log('fff');
-                        // Fluttertoast.showToast(
-                        //   msg: 'GeeksforGeeks',
-                        //   backgroundColor: Colors.grey,
-                        // );
-
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text("Promo Code Applied")));
+                        showDefaultSnackbar(context, 'Promo Coupon Applied');
                       },
                       child: MaterialButton1(
                         height1: MediaQuery.of(context).size.height * 0.063,
@@ -89,7 +63,6 @@ class CouponScreen extends StatelessWidget {
                     ImgConstants.PROMO_CODE2,
                     height: MediaQuery.of(context).size.height * 0.2,
                     width: MediaQuery.of(context).size.height * 0.4,
-                    
                   ),
                 ),
                 const SizedBox(

@@ -168,6 +168,7 @@ class APIServices {
               PrefConstants.USER_DATA, jsonEncode(loginData.userDetail));
           SharedPreference.setValue(PrefConstants.USER_EMAIL_VERIFY_TAG,
               loginData.userDetail?.emailverifytag);
+          
         }
 
         return loginData;

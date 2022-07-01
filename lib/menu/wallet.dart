@@ -1,8 +1,10 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:wystle/constant/color_constant.dart';
 import 'package:wystle/menu/add_card.dart';
+import 'package:wystle/menu/wallet_transaction.dart';
+import 'package:wystle/widget/appbar_widget.dart';
+
+import '../testing/gpay_payment.dart';
 
 class Wallet extends StatefulWidget {
   const Wallet({Key? key}) : super(key: key);
@@ -15,186 +17,185 @@ class _WalletState extends State<Wallet> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: ColorConstant.COLOR_WHITE,
-        leading: InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: const Icon(
-            Icons.arrow_back,
-            color: ColorConstant.COLOR_BLACK,
-            size: 24,
-          ),
-        ),
-        title: const Text(
-          'Wallet',
-          style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: ColorConstant.COLOR_BLACK),
-        ),
-      ),
+      backgroundColor: ColorConstant.COLOR_WHITE,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.only(left: 15.0, right: 15, bottom: 80),
+            padding: const EdgeInsets.only(
+                top: 30, left: 15.0, right: 15, bottom: 80),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const AppBarWidget(
+                  title: 'Wallet',
+                ),
                 const SizedBox(
                   height: 20,
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                      color: ColorConstant.COLOR_LIGHT_DARK_GREY,
-                      borderRadius: BorderRadius.circular(15)),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(10.0, 20, 10, 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "Wallet Balance",
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: ColorConstant.COLOR_BLACK),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Text(
-                              "Rs. 0.00",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  color: ColorConstant.COLOR_BLACK),
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              size: 16,
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.35,
-
-                          //   width: 100,
-                          decoration: BoxDecoration(
-                              color: ColorConstant.COLOR_BLACK,
-                              borderRadius: BorderRadius.circular(20)),
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 10.0, right: 10, top: 10, bottom: 10),
-                            child: Row(children: const [
-                              Icon(Icons.add, color: ColorConstant.COLOR_WHITE),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text("Gift Card",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                      color: ColorConstant.COLOR_WHITE)),
-                            ]),
-                          ),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const WalletTransaction()),
+                    );
+                    // log('fff');
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: ColorConstant.COLOR_WHITE,
+                      boxShadow: [
+                        BoxShadow(
+                          color: ColorConstant.COLOR_ORIGINAL_GREY
+                              .withOpacity(0.3),
+                          offset: const Offset(0, 0),
+                          blurRadius: 3.0,
+                          spreadRadius: 2.0,
                         ),
                       ],
                     ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                      color: ColorConstant.COLOR_LIGHT_DARK_GREY,
-                      borderRadius: BorderRadius.circular(15)),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(10.0, 20, 10, 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "Send a gift",
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: ColorConstant.COLOR_BLACK),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Text(
-                              "You can send a gift to your friends",
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: ColorConstant.COLOR_BLACK),
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              size: 16,
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.28,
-
-                          //   width: 100,
-                          decoration: BoxDecoration(
-                              color: ColorConstant.COLOR_BLACK,
-                              borderRadius: BorderRadius.circular(20)),
-                          child: const Padding(
-                            padding: EdgeInsets.only(
-                                left: 12.0, right: 12, top: 12, bottom: 12),
-                            child: Text("Send a gift",
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    color: ColorConstant.COLOR_WHITE)),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(10.0, 15, 10, 15),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.description,
+                            size: 22,
+                            color: ColorConstant.COLOR_ORIGINAL_GREY,
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                const Divider(
-                  thickness: 1,
-                  color: ColorConstant.COLOR_LIGHT_DARK_GREY,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  "Payments",
-                  style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                        color: ColorConstant.COLOR_BLACK,
-                        fontWeight: FontWeight.w600,
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: Text(
+                              'Wallet Transactions',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle1
+                                  ?.copyWith(
+                                    color: ColorConstant.COLOR_BLACK,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                            ),
+                          ),
+                          const Icon(
+                            Icons.more_vert,
+                            size: 22,
+                            color: ColorConstant.COLOR_BLACK,
+                          )
+                        ],
                       ),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 30),
+
+                // Wystle Cash
+
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const FlutterWavePaymentGateway()),
+                    );
+                    // log('fff');
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: ColorConstant.COLOR_WHITE,
+                      boxShadow: [
+                        BoxShadow(
+                          color: ColorConstant.COLOR_ORIGINAL_GREY
+                              .withOpacity(0.3),
+                          offset: const Offset(0, 0),
+                          blurRadius: 3.0,
+                          spreadRadius: 2.0,
+                        ),
+                      ],
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(10.0, 15, 10, 15),
+                      child: Row(
+                        children: [
+                          Container(
+                            decoration: const BoxDecoration(
+                                color: ColorConstant.COLOR_BLACK),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text(
+                                '0.00',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle1
+                                    ?.copyWith(
+                                      color: ColorConstant.COLOR_WHITE,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Wystle Cash',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle2
+                                      ?.copyWith(
+                                        color: ColorConstant.COLOR_BLACK,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                ),
+                                Text(
+                                  '1 coin = 1GBP',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle2
+                                      ?.copyWith(
+                                        color:
+                                            ColorConstant.COLOR_ORIGINAL_GREY,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const Icon(
+                            Icons.help,
+                            size: 26,
+                            color: ColorConstant.THEME_COLOR_RED,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(
+                  height: 30,
+                ),
+                Center(
+                  child: Text(
+                    "Payments",
+                    style: Theme.of(context).textTheme.headline5?.copyWith(
+                          color: ColorConstant.COLOR_BLACK,
+                          fontWeight: FontWeight.w500,
+                        ),
+                  ),
                 ),
                 const SizedBox(height: 20),
                 InkWell(
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) =>  AddCard()),
+                      MaterialPageRoute(builder: (context) => const AddCard()),
                     );
                     // log('fff');
                   },

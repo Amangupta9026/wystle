@@ -1,19 +1,26 @@
 import 'dart:developer';
+import 'dart:io';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:wystle/module/homepage/homepage.dart';
 import 'package:wystle/service/api_services.dart';
 
 import '../auth/onboarding.dart';
 import '../constant/color_constant.dart';
+import '../constant/image_constant.dart';
 import '../model/email_verify_success_model.dart';
 import '../model/logout_model.dart';
 import '../model/verify_registry_model.dart';
 import '../module/sharedpreference/shared_preference.dart';
 import '../module/sharedpreference/userdata.dart';
 import '../service/api_constants.dart';
+import '../widget/appbar_widget.dart';
 import '../widget/flush_bar.dart';
 import '../widget/reusubility_button.dart';
+import '../widget/toast_widget.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -26,119 +33,233 @@ class _ProfileState extends State<Profile> {
   var userdata = UserData.geUserData();
   VerifyRegisterModel? verifyRegisterModel;
   TextEditingController verificationCodeController = TextEditingController();
+  final ImagePicker picker = ImagePicker();
+  File? image1;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorConstant.BACKGROUND_COLOR,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: ColorConstant.COLOR_WHITE,
-        leading: InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: const Icon(
-            Icons.arrow_back,
-            color: ColorConstant.COLOR_BLACK,
-            size: 24,
-          ),
-        ),
-        title: Text(
-          'Profile',
-          style: Theme.of(context).textTheme.headline6?.copyWith(
-                color: ColorConstant.COLOR_BLACK,
-                fontWeight: FontWeight.w500,
-              ),
-        ),
-      ),
+      backgroundColor: ColorConstant.COLOR_WHITE,
       body: SingleChildScrollView(
           child: Padding(
-        padding: const EdgeInsets.fromLTRB(20.0, 20, 20, 60),
+        padding: const EdgeInsets.fromLTRB(20.0, 60, 20, 60),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const AppBarWidget(
+              text1: 'Edit profile',
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+
             Text(
-              'Name',
-              style: Theme.of(context).textTheme.headline6?.copyWith(
+              'Edit your information',
+              style: Theme.of(context).textTheme.subtitle2?.copyWith(
                     color: ColorConstant.COLOR_BLACK,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w400,
                   ),
             ),
-            const SizedBox(height: 10),
+
+            const SizedBox(
+              height: 30,
+            ),
+
+            Center(
+                child: Stack(alignment: Alignment.bottomLeft, children: [
+              InkWell(
+                onTap: () async {
+                  // Navigator.of(context).pop();
+                  await _imgFromGallery();
+                },
+                child: Container(
+                  height: 100,
+                  width: 100,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: ColorConstant.COLOR_LIGHT_GREY2,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      image1 != null
+                          ? Container(
+                              width: 100.0,
+                              height: 100.0,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    fit: BoxFit.fill, image: FileImage(image1!)
+                                    // : userData.data?.profileImage != null &&
+                                    //         userData.data?.profileImage != ''
+                                    //     ? Image.network(
+                                    //         userData?.data?.profileImage,
+                                    //         errorBuilder: (BuildContext context,
+                                    //             Object exception,
+                                    //             StackTrace stackTrace) {
+                                    //           return Image.asset(
+                                    //               ImgConstants.DEFAULT_PLAYER);
+                                    //         },
+                                    //       ).image
+
+                                    ),
+                              ),
+                            )
+                          : Container(
+                              width: 30.0,
+                              height: 30.0,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                // color: ColorConstant.COLOR_WHITE,
+                                image: DecorationImage(
+                                    fit: BoxFit.fill,
+                                    image:
+                                        AssetImage(ImgConstants.PERSON_ICON)),
+                              ),
+                            )
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 50,
+                right: 0,
+                top: 75,
+                bottom: 0,
+                child: InkWell(
+                  onTap: () async {
+                    await _imgFromGallery();
+                  },
+                  child: Container(
+                    height: 20,
+                    width: 20,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: ColorConstant.COLOR_WHITE,
+                        border: Border.all(
+                            color: ColorConstant.COLOR_ORIGINAL_GREY)),
+                    child: const Icon(
+                      Icons.edit,
+                      color: ColorConstant.COLOR_BLACK,
+                      size: 12.0,
+                    ),
+                  ),
+                ),
+              )
+            ])),
+
+            const SizedBox(
+              height: 20,
+            ),
+
+            // Neumorphic(
+            //   // margin:
+            //   //     const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 4),
+            //   style: NeumorphicStyle(
+            //     shadowLightColor: Colors.grey,
+            //     color: const Color(0xffebecf0),
+            //     intensity: 10,
+            //     surfaceIntensity: 10,
+            //     depth: NeumorphicTheme.embossDepth(context),
+            //     boxShape:
+            //         NeumorphicBoxShape.roundRect(BorderRadius.circular(0)),
+            //   ),
+            //   padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 18),
+            //   child: TextField(
+            //       controller: TextEditingController(
+            //         text: userdata.firstname!,
+            //       ),
+            //       onChanged: (value) {},
+            //       cursorColor: ColorConstant.THEME_COLOR_RED,
+            //       decoration: const InputDecoration.collapsed(
+            //           hintText: "First Name",
+            //           hintStyle: TextStyle(color: Color(0xffbbbdbc)))),
+            // ),
+
             TextFieldWithOnlyPlaceHolder(
-              enabledTextField: false,
+              enabledTextField: true,
               controller1: TextEditingController(
-                text: userdata.firstname! + ' ' + userdata.lastname!,
+                text: userdata.firstname!,
               ),
             ),
-            const SizedBox(height: 25),
+
+            const SizedBox(
+              height: 15,
+            ),
+
+            TextFieldWithOnlyPlaceHolder(
+              enabledTextField: true,
+              controller1: TextEditingController(
+                text: userdata.lastname!,
+              ),
+            ),
+
+            const SizedBox(height: 15),
+            TextFieldWithOnlyPlaceHolder(
+              enabledTextField: true,
+              controller1: TextEditingController(text: userdata.email),
+            ),
 
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                // ElevatedButton(
-                //     onPressed: () {
-                //       log(SharedPreference.getValue(
-                //           PrefConstants.USER_EMAIL_VERIFY_TAG));
-                //       // log(userdata.emailverifytag!);
-                //       // log(userdata.userid.toString());
-                //       // log(userdata.authToken.toString());
-                //     },
-                //     child: Text("press")),
-                Text(
-                  'Email',
-                  style: Theme.of(context).textTheme.headline6?.copyWith(
-                        color: ColorConstant.COLOR_BLACK,
-                        fontWeight: FontWeight.w500,
-                      ),
-                ),
                 Visibility(
                   visible: SharedPreference.getValue(
                           PrefConstants.USER_EMAIL_VERIFY_TAG) ==
                       'pending',
-                  child: InkWell(
-                    onTap: () async {
-                      verifyRegisterModel =
-                          await APIServices.getVerifyEmailRiderAPI(
-                              userdata.userid!);
-                      if (verifyRegisterModel?.status == 'true') {
-                        showAlertDialog(
-                            context,
-                            verifyRegisterModel?.message ??
-                                'Verification code sent to your email');
-                      }
-                    },
-                    child: Text(
-                      'Verify',
-                      style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                            color: ColorConstant.COLOR_BLUE,
-                            fontWeight: FontWeight.w500,
-                          ),
-                    ),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 15),
+                      InkWell(
+                        onTap: () async {
+                          verifyRegisterModel =
+                              await APIServices.getVerifyEmailRiderAPI(
+                                  userdata.userid!);
+                          if (verifyRegisterModel?.status == 'true') {
+                            showAlertDialog(
+                                context,
+                                verifyRegisterModel?.message ??
+                                    'Verification code sent to your email');
+                          }
+                        },
+                        child: Text(
+                          'Verify',
+                          style:
+                              Theme.of(context).textTheme.subtitle1?.copyWith(
+                                    color: ColorConstant.COLOR_BLUE,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 10),
+
+            const SizedBox(height: 15),
+
             TextFieldWithOnlyPlaceHolder(
-              enabledTextField: false,
-              controller1: TextEditingController(text: userdata.email),
-            ),
-            const SizedBox(height: 25),
-            Text(
-              'Mobile Number',
-              style: Theme.of(context).textTheme.headline6?.copyWith(
-                    color: ColorConstant.COLOR_BLACK,
-                    fontWeight: FontWeight.w500,
-                  ),
-            ),
-            const SizedBox(height: 10),
-            TextFieldWithOnlyPlaceHolder(
-              enabledTextField: false,
+              enabledTextField: true,
               controller1: TextEditingController(text: userdata.mobileno),
             ),
             const SizedBox(height: 45),
+
+            // Save Button
+
+            InkWell(
+              onTap: () {
+                showDefaultSnackbar(context, 'Save');
+              },
+              child: const MaterialButton1(
+                height1: 48,
+                txt1: 'SAVE',
+                color1: ColorConstant.THEME_COLOR_RED,
+              ),
+            ),
+
+            const SizedBox(height: 25),
 
             // LogOut Button
 
@@ -160,7 +281,7 @@ class _ProfileState extends State<Profile> {
               },
               child: MaterialButton1(
                 height1: MediaQuery.of(context).size.width * 0.12,
-                width1: MediaQuery.of(context).size.width * 0.3,
+                width1: MediaQuery.of(context).size.width,
                 txt1: 'Logout',
               ),
             )
@@ -271,5 +392,39 @@ class _ProfileState extends State<Profile> {
         return alert;
       },
     );
+  }
+
+  // Image Select
+  Future<void> _imgFromGallery() async {
+    var status = await Permission.storage.status;
+    if (status.isGranted) {
+      XFile? image =
+          await picker.pickImage(source: ImageSource.gallery, imageQuality: 25);
+
+      setState(() {
+        image1 = File(image!.path);
+      });
+    } else {
+      var permissionResult = await Permission.storage.request();
+      if (permissionResult.isDenied || permissionResult.isPermanentlyDenied) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) => CupertinoAlertDialog(
+                  title: const Text('Storage Permission'),
+                  content: const Text(
+                      'This app needs storage access to take pictures for upload user profile photo'),
+                  actions: <Widget>[
+                    CupertinoDialogAction(
+                      child: const Text('Deny'),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                    CupertinoDialogAction(
+                      child: const Text('Settings'),
+                      onPressed: () => openAppSettings(),
+                    ),
+                  ],
+                ));
+      }
+    }
   }
 }

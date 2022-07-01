@@ -15,45 +15,45 @@ class AppTheme {
 
   static TextTheme _buildTextTheme(TextTheme base) {
     return base.copyWith(
-      headline6: GoogleFonts.montserrat(
+      headline6: GoogleFonts.smooch(
           textStyle: TextStyle(
         color: base.headline6?.color,
         fontSize: 20,
         fontWeight: FontWeight.w500,
       )),
-      subtitle1: GoogleFonts.montserrat(
+      subtitle1: GoogleFonts.smooch(
           textStyle: TextStyle(color: base.subtitle1?.color, fontSize: 18)),
-      subtitle2: GoogleFonts.montserrat(
+      subtitle2: GoogleFonts.smooch(
           textStyle: TextStyle(
               color: base.subtitle2?.color,
               fontSize: 14,
               fontWeight: FontWeight.w500)),
-      bodyText2: GoogleFonts.montserrat(
+      bodyText2: GoogleFonts.smooch(
           textStyle: TextStyle(
         color: base.bodyText2?.color,
         fontSize: 16,
         fontWeight: FontWeight.normal,
       )),
-      bodyText1: GoogleFonts.montserrat(
+      bodyText1: GoogleFonts.smooch(
           textStyle: TextStyle(color: base.bodyText1?.color, fontSize: 14)),
-      button: GoogleFonts.montserrat(
+      button: GoogleFonts.smooch(
           textStyle: TextStyle(
               color: base.button?.color,
               fontSize: 14,
               fontWeight: FontWeight.w500)),
-      caption: GoogleFonts.montserrat(
+      caption: GoogleFonts.smooch(
           textStyle: TextStyle(color: base.caption?.color, fontSize: 12)),
-      headline4: GoogleFonts.montserrat(
+      headline4: GoogleFonts.smooch(
           textStyle: TextStyle(color: base.headline4?.color, fontSize: 34)),
-      headline3: GoogleFonts.montserrat(
+      headline3: GoogleFonts.smooch(
           textStyle: TextStyle(color: base.headline3?.color, fontSize: 48)),
-      headline2: GoogleFonts.montserrat(
+      headline2: GoogleFonts.smooch(
           textStyle: TextStyle(color: base.headline2?.color, fontSize: 60)),
-      headline1: GoogleFonts.montserrat(
+      headline1: GoogleFonts.smooch(
           textStyle: TextStyle(color: base.headline1?.color, fontSize: 96)),
-      headline5: GoogleFonts.montserrat(
+      headline5: GoogleFonts.smooch(
           textStyle: TextStyle(color: base.headline5?.color, fontSize: 24)),
-      overline: GoogleFonts.montserrat(
+      overline: GoogleFonts.smooch(
           textStyle: TextStyle(color: base.overline?.color, fontSize: 10)),
     );
   }

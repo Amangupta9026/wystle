@@ -1,9 +1,6 @@
-import 'dart:developer';
-
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:wystle/push_notification/push_notification.dart';
 
 import 'constant/routepath.dart' as routepath;
 import 'firebase_options.dart';
@@ -15,20 +12,12 @@ Future<void> main() async {
     name: 'wystle',
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  PushNotificationService.initialize();
+  // PushNotificationService.initialize();
   await SharedPreference.init();
-  // _instanceId();
-
+  // runApp(DevicePreview(
+      // enabled: !kReleaseMode, builder: (context) => const MyApp()));
   runApp(const MyApp());
 }
-
-// void _instanceId() async {
-//   await Firebase.initializeApp();
-//   FirebaseMessaging.instance.getInitialMessage();
-//   FirebaseMessaging.instance.sendMessage();
-//   var token = await FirebaseMessaging.instance.getToken();
-//   log("Print Instance Token ID: " + token!);
-// }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

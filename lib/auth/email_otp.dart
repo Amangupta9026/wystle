@@ -11,6 +11,7 @@ import 'package:wystle/widget/reusubility_button.dart';
 import '../model/concern_notification.dart';
 import '../model/email_otp_register_model.dart';
 import '../model/login_flash_model.dart';
+import '../model/login_model.dart';
 import '../module/sharedpreference/shared_preference.dart';
 import '../module/sharedpreference/userdata.dart';
 import '../service/api_constants.dart';
@@ -70,7 +71,8 @@ class _EmailOTPScreenState extends State<EmailOTPScreen> {
         "userid": userdata.userid,
         "country": "United Kingdom",
         "state": "England",
-        "city": "City of London"
+        "district": "Greater London",
+        "city": "London"
       };
       loginFlashModel = await APIServices.getLoginFlashAPI(_body);
     } catch (e) {
@@ -96,7 +98,8 @@ class _EmailOTPScreenState extends State<EmailOTPScreen> {
         "userid": userdata.userid,
         "country": "United Kingdom",
         "state": "England",
-        "city": "City of London"
+        "district": "Greater London",
+        "city": "London"
       };
 
       concernNotificationModel =
@@ -121,6 +124,11 @@ class _EmailOTPScreenState extends State<EmailOTPScreen> {
       log("Internet is not connected");
     }
   }
+
+  final Map _body = {
+    "mobileno": SharedPreference.getValue(PrefConstants.MOBILE_NUMBER),
+    "deviceid": SharedPreference.getValue(PrefConstants.DEVICE_ID) ?? '',
+  };
 
   // Register API
 
@@ -323,43 +331,52 @@ class _EmailOTPScreenState extends State<EmailOTPScreen> {
                                               if (emailOTPRegisterModel
                                                       .status ==
                                                   'true') {
-                                                await _apiConcernNotificationDetail();
-                                                await _apiLoginFlashDetail();
+                                                LoginModel? loginModel =
+                                                    await APIServices
+                                                        .getLoginAPI(_body);
 
-                                                SharedPreference.setValue(
-                                                    PrefConstants.IS_LOGIN,
-                                                    true);
+                                                if (loginModel?.status ==
+                                                    'true') {
+                                                  await _apiConcernNotificationDetail();
+                                                  await _apiLoginFlashDetail();
 
-                                                if (concernNotificationModel
-                                                        ?.status ==
-                                                    'true') {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            const ConcernNotification()),
-                                                  );
-                                                } else if (loginFlashModel
-                                                        ?.status ==
-                                                    'true') {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            const LoginFlashScreen()),
-                                                  );
-                                                } else if (loginFlashModel
-                                                            ?.status ==
-                                                        'false' &&
-                                                    concernNotificationModel
-                                                            ?.status ==
-                                                        'false') {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            const HomePage2()),
-                                                  );
+                                                  log(SharedPreference.getValue(
+                                                      PrefConstants.USER_DATA));
+                                                  SharedPreference.setValue(
+                                                      PrefConstants.IS_LOGIN,
+                                                      true);
+
+                                                  if (concernNotificationModel
+                                                          ?.status ==
+                                                      'true') {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              const ConcernNotification()),
+                                                    );
+                                                  } else if (loginFlashModel
+                                                          ?.status ==
+                                                      'true') {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              const LoginFlashScreen()),
+                                                    );
+                                                  } else if (loginFlashModel
+                                                              ?.status ==
+                                                          'false' &&
+                                                      concernNotificationModel
+                                                              ?.status ==
+                                                          'false') {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              const HomePage2()),
+                                                    );
+                                                  }
                                                 }
                                               } else if (emailOTPRegisterModel
                                                       .status ==
@@ -411,46 +428,56 @@ class _EmailOTPScreenState extends State<EmailOTPScreen> {
 
                                         if (emailOTPRegisterModel.status ==
                                             'true') {
-                                          await _apiConcernNotificationDetail();
-                                          await _apiLoginFlashDetail();
+                                          LoginModel? loginModel =
+                                              await APIServices.getLoginAPI(
+                                                  _body);
 
-                                          SharedPreference.setValue(
-                                              PrefConstants.IS_LOGIN, true);
+                                          if (loginModel?.status == 'true') {
+                                            await _apiConcernNotificationDetail();
+                                            await _apiLoginFlashDetail();
 
-                                          if (concernNotificationModel
-                                                  ?.status ==
-                                              'true') {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const ConcernNotification()),
-                                            );
-                                          } else if (loginFlashModel?.status ==
-                                              'true') {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const LoginFlashScreen()),
-                                            );
-                                          } else if (loginFlashModel?.status ==
-                                                  'false' &&
-                                              concernNotificationModel
-                                                      ?.status ==
-                                                  'false') {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const HomePage2()),
-                                            );
+                                            log(SharedPreference.getValue(
+                                                PrefConstants.USER_DATA));
+                                            SharedPreference.setValue(
+                                                PrefConstants.IS_LOGIN, true);
+
+                                            if (concernNotificationModel
+                                                    ?.status ==
+                                                'true') {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const ConcernNotification()),
+                                              );
+                                            } else if (loginFlashModel
+                                                    ?.status ==
+                                                'true') {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const LoginFlashScreen()),
+                                              );
+                                            } else if (loginFlashModel
+                                                        ?.status ==
+                                                    'false' &&
+                                                concernNotificationModel
+                                                        ?.status ==
+                                                    'false') {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const HomePage2()),
+                                              );
+                                            }
+                                          } else if (emailOTPRegisterModel
+                                                  .status ==
+                                              'false') {
+                                            showAlertDialog(context,
+                                                emailOTPRegisterModel.message!);
                                           }
-                                        } else if (emailOTPRegisterModel
-                                                .status ==
-                                            'false') {
-                                          showAlertDialog(context,
-                                              emailOTPRegisterModel.message!);
                                         }
                                       },
                                       child: Text(

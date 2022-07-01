@@ -38,6 +38,8 @@ class ConcernNotifDetail {
   String? countryName;
   String? stateid;
   String? stateName;
+  String? districtid;
+  String? districtName;
   String? cityid;
   String? cityName;
   String? conNotifLabel;
@@ -52,6 +54,8 @@ class ConcernNotifDetail {
       this.countryName,
       this.stateid,
       this.stateName,
+      this.districtid,
+      this.districtName,
       this.cityid,
       this.cityName,
       this.conNotifLabel,
@@ -66,6 +70,8 @@ class ConcernNotifDetail {
     countryName = json['country_name'];
     stateid = json['stateid'];
     stateName = json['state_name'];
+    districtid = json['districtid'];
+    districtName = json['district_name'];
     cityid = json['cityid'];
     cityName = json['city_name'];
     conNotifLabel = json['con_notif_label'];
@@ -76,12 +82,14 @@ class ConcernNotifDetail {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =  <String, dynamic>{};
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['countryid'] = countryid;
     data['country_name'] = countryName;
     data['stateid'] = stateid;
     data['state_name'] = stateName;
+    data['districtid'] = districtid;
+    data['district_name'] = districtName;
     data['cityid'] = cityid;
     data['city_name'] = cityName;
     data['con_notif_label'] = conNotifLabel;

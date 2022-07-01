@@ -51,16 +51,21 @@ class _OnBoardingState extends State<OnBoarding> {
       Map _body = {
         "country": "United Kingdom",
         "state": "England",
-        "city": "City of London"
+        "district": "Greater London",
+        "city": "London"
       };
       boardingModel = await APIServices.getBoardingAPI(_body);
       fetchAWS3Image(boardingModel?.obPosterDetail?[0].posterImage ?? '');
     } catch (e) {
       log(e.toString());
     } finally {
+      if(mounted)
+      {
       setState(() {
         isProgressRunning = false;
       });
+
+      }
     }
   }
 
@@ -145,9 +150,9 @@ class _OnBoardingState extends State<OnBoarding> {
     return Scaffold(
       // backgroundColor: ColorConstant.COLOR_WHITE,
       backgroundColor: boardingModel?.status == "true"
-          ? boardingModel?.obPosterDetail![0].posterbgColor != null
+          ? boardingModel?.obPosterDetail![0].posterBgColor != null
               ? Color(int?.tryParse(
-                  "0xFF${boardingModel?.obPosterDetail?[0].posterbgColor?.substring(1, boardingModel?.obPosterDetail?[0].posterbgColor?.length)}")!)
+                  "0xFF${boardingModel?.obPosterDetail?[0].posterBgColor?.substring(1, boardingModel?.obPosterDetail?[0].posterBgColor?.length)}")!)
               : const Color(0xFFF5F5F5)
           : const Color(0xFFF5F5F5),
       body: SafeArea(

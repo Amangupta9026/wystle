@@ -65,7 +65,8 @@ class _ConcernNotificationState extends State<ConcernNotification> {
         "userid": userdata.userid,
         "country": "United Kingdom",
         "state": "England",
-        "city": "City of London"
+        "district": "Greater London",
+        "city": "London"
       };
 
       concernNotificationModel =
@@ -92,7 +93,8 @@ class _ConcernNotificationState extends State<ConcernNotification> {
         "userid": userdata.userid,
         "country": "United Kingdom",
         "state": "England",
-        "city": "City of London"
+        "district": "Greater London",
+        "city": "London"
       };
       loginFlashModel = await APIServices.getLoginFlashAPI(_body);
     } catch (e) {
@@ -633,12 +635,12 @@ class _ConcernNotificationState extends State<ConcernNotification> {
         ),
         (route) => false,
       );
-    } else if (loginFlashModel?.status == 'true' || enabled) {
+    } else if (loginFlashModel?.status == 'true' && enabled) {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const LoginFlashScreen()),
       );
-    } else {
+    } else if (loginFlashModel?.status == 'false' && enabled) {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const HomePage2()),
