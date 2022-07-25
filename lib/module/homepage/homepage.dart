@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:intl/intl.dart';
 import 'package:wystle/constant/image_constant.dart';
@@ -12,12 +11,11 @@ import '../../model/login_cookies_model.dart';
 import '../../model/user_location_model.dart';
 import '../../push_notification/firebase_messaging.dart';
 import '../../service/api_constants.dart';
-import '../../service/api_services.dart';
 import '../../utils/utils.dart';
+import '../menu/menu_profile.dart';
 import '../sharedpreference/shared_preference.dart';
 import '../sharedpreference/userdata.dart';
-import 'drawer.dart';
-import 'homescreen_map.dart';
+import '../../map/homescreen_map.dart';
 
 class HomePage2 extends StatefulWidget {
   final String? screencolor1;
@@ -39,7 +37,7 @@ class _HomePage2State extends State<HomePage2> {
   double? getlong;
   final String apiKey = "6ufmOlgvbUM74wskYZflYLAgZSaFXQGq";
   final List<Marker> markers = List.empty(growable: true);
-  final GlobalKey<ScaffoldState> _scaffoldStateKey = GlobalKey<ScaffoldState>();
+  // final GlobalKey<ScaffoldState> _scaffoldStateKey = GlobalKey<ScaffoldState>();
   bool isProgressRunning = false;
   LoginCookiesModel? loginCookiesModel;
   var now = DateTime.now();
@@ -50,95 +48,42 @@ class _HomePage2State extends State<HomePage2> {
 
   // googlemapflutter.LatLng startLocation =
   //     const googlemapflutter.LatLng(26.7489716, 83.3588597);
-//  var response;
-  // List<Results>? results;
-
-  // Get User Location API Call
-
-  Future<void> _apiGetUserLocationAPI() async {
-    try {
-      setState(() {
-        isProgressRunning = true;
-      });
-      userLocationModel = await APIServices.getUserLocationAPI();
-    } catch (e) {
-      log(e.toString());
-    } finally {
-      setState(() {
-        isProgressRunning = false;
-      });
-    }
-  }
 
   @override
   void initState() {
     super.initState();
-    //  _apiAfterLoginCookies();
     checkInternet();
     Messaging.showMessage();
     log(SharedPreference.getValue(PrefConstants.USER_DATA));
-  }
-
-  // Login Cookies Api
-
-  Future<void> _apiAfterLoginCookies() async {
-    try {
-      setState(() {
-        isProgressRunning = true;
-      });
-      var now = DateTime.now();
-      var formatterDate = DateFormat('dd/MM/yy');
-      var formatterTime = DateFormat('kk:mm');
-      String actualDate = formatterDate.format(now);
-      String actualTime = formatterTime.format(now);
-      await _apiGetUserLocationAPI();
-
-      loginCookiesModel = await APIServices.getAfterLoginAPI(
-          SharedPreference.getValue(PrefConstants.USER_CURRENT_SUBLOCALITY),
-          userLocationModel!.predResult!.countryName.toString(),
-          userLocationModel!.predResult!.stateName.toString(),
-          userLocationModel!.predResult!.cityName.toString(),
-          // SharedPreference.getValue(PrefConstants.USER_COUNTRY),
-          // SharedPreference.getValue(PrefConstants.USER_STATE),
-          // 'State Uttar pradesh',
-          // SharedPreference.getValue(PrefConstants.USER_CITY),
-          SharedPreference.getValue(PrefConstants.IP_ADDRESS),
-          SharedPreference.getValue(PrefConstants.DEVICE_NAME),
-          SharedPreference.getValue(PrefConstants.DEVICE_ID),
-          SharedPreference.getValue(PrefConstants.DEVICE_BRAND),
-          SharedPreference.getValue(PrefConstants.DEVICE_MANUFACTURING),
-          SharedPreference.getValue(PrefConstants.DEVICE_NAME),
-          SharedPreference.getValue(PrefConstants.DEVICE_VERSION),
-          '$actualDate / $actualTime');
-    } catch (e) {
-      log(e.toString());
-    } finally {
-      setState(() {
-        isProgressRunning = false;
-      });
-    }
+    log(SharedPreference.getValue(PrefConstants.USER_LOCATION_DATA));
   }
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarColor: widget.screencolor1 != null
-            ? Color(int.tryParse('0xFF${widget.screencolor1}')!)
-            : ColorConstant.THEME_COLOR_RED));
-    return Scaffold(
-      key: _scaffoldStateKey,
-      drawer: const DrawerScreen(),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Stack(
-            children: [
-              Container(
-                color: const Color(0xFFf2f2f4),
-                // color: Theme.of(context).colorScheme.primaryVariant,
-              ),
-              backgroundWidget(context),
-              foregroundWidget(context),
-            ],
+    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    //     statusBarColor: widget.screencolor1 != null
+    //         ? Color(int.tryParse('0xFF${widget.screencolor1}')!)
+    //         : ColorConstant.THEME_COLOR_RED));
+    return Container(
+      color: widget.screencolor1 != null
+          ? Color(int.tryParse('0xFF${widget.screencolor1}')!)
+          : ColorConstant.THEME_COLOR_RED,
+      child: Scaffold(
+        // key: _scaffoldStateKey,
+        // drawer: const DrawerScreen(),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            physics: const ClampingScrollPhysics(),
+            child: Stack(
+              children: [
+                Container(
+                  color: const Color(0xFFf2f2f4),
+                  // color: Theme.of(context).colorScheme.primaryVariant,
+                ),
+                backgroundWidget(context),
+                foregroundWidget(context),
+              ],
+            ),
           ),
         ),
       ),
@@ -159,7 +104,7 @@ class _HomePage2State extends State<HomePage2> {
                         color: widget.screencolor1 != null
                             ? Color(
                                 int?.tryParse("0xFF${widget.screencolor1}")!)
-                            : ColorConstant.THEME_COLOR_RED))),
+                            : const Color(0xFF737373)))),
           ],
         ));
   }
@@ -167,9 +112,8 @@ class _HomePage2State extends State<HomePage2> {
   Widget foregroundWidget(BuildContext context) {
     return Column(
       children: [
-        // backgroundWidget(context),
         Padding(
-          padding: const EdgeInsets.fromLTRB(25.0, 20, 25, 50),
+          padding: const EdgeInsets.fromLTRB(25.0, 20, 25, 30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -177,7 +121,10 @@ class _HomePage2State extends State<HomePage2> {
                 children: [
                   InkWell(
                     onTap: () {
-                      _scaffoldStateKey.currentState?.openDrawer();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => MenuProfile()),
+                      );
                     },
                     child: const Icon(
                       Icons.menu,
@@ -186,7 +133,7 @@ class _HomePage2State extends State<HomePage2> {
                   ),
                   const Spacer(),
                   Text(
-                    "Good afternoon, Ryan",
+                    "Good afternoon, ${userdata.firstname}",
                     style: Theme.of(context).textTheme.headline6?.copyWith(
                           color: ColorConstant.COLOR_WHITE,
                           fontWeight: FontWeight.w600,
@@ -198,42 +145,6 @@ class _HomePage2State extends State<HomePage2> {
               const SizedBox(height: 30),
               Row(
                 children: [
-                  // ElevatedButton(
-                  //     onPressed: () {
-                  //       // _apiAfterLoginCookies();
-                  //       // log(loginCookiesModel.toString());
-                  //       log(SharedPreference.getValue(
-                  //           PrefConstants.USER_CURRENT_STREET));
-                  //       log(SharedPreference.getValue(
-                  //           PrefConstants.USER_CURRENT_SUBLOCALITY));
-                  //       log(SharedPreference.getValue(
-                  //           PrefConstants.USER_COUNTRY));
-
-                  //       log(SharedPreference.getValue(PrefConstants.USER_CITY));
-                  //       log(SharedPreference.getValue(
-                  //           PrefConstants.IP_ADDRESS));
-                  //       log(SharedPreference.getValue(
-                  //           PrefConstants.DEVICE_NAME));
-                  //       log(SharedPreference.getValue(PrefConstants.DEVICE_ID));
-                  //       log(SharedPreference.getValue(
-                  //           PrefConstants.DEVICE_BRAND));
-                  //       log(SharedPreference.getValue(
-                  //           PrefConstants.DEVICE_MANUFACTURING));
-                  //       log(SharedPreference.getValue(
-                  //           PrefConstants.DEVICE_NAME));
-                  //       log(SharedPreference.getValue(
-                  //           PrefConstants.DEVICE_VERSION));
-                  //       // '12',
-                  //       var now = DateTime.now();
-                  //       var formatterDate = DateFormat('dd/MM/yy');
-                  //       var formatterTime = DateFormat('kk:mm');
-                  //       String actualDate = formatterDate.format(now);
-                  //       String actualTime = formatterTime.format(now);
-
-                  //       log(actualDate.toString());
-                  //       log(actualTime);
-                  //     },
-                  //     child: Text("PRESS")),
                   Column(
                     children: [
                       Image.asset(
@@ -262,7 +173,7 @@ class _HomePage2State extends State<HomePage2> {
                       Text(
                         "Wystle Status",
                         style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                              color: ColorConstant.COLOR_ORIGINAL_GREY,
+                              color: ColorConstant.COLOR_WHITE,
                               fontWeight: FontWeight.w600,
                             ),
                       ),
@@ -278,7 +189,7 @@ class _HomePage2State extends State<HomePage2> {
                       Text(
                         "Your next reward",
                         style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                              color: ColorConstant.COLOR_ORIGINAL_GREY,
+                              color: ColorConstant.COLOR_WHITE,
                               fontWeight: FontWeight.w600,
                             ),
                       ),
@@ -387,7 +298,7 @@ class _HomePage2State extends State<HomePage2> {
                                       .textTheme
                                       .subtitle2
                                       ?.copyWith(
-                                        color: Colors.blue[700],
+                                        color: ColorConstant.THEME_COLOR_RED,
                                         //ColorConstant.THEME_COLOR_RED,
                                         fontWeight: FontWeight.w900,
                                         letterSpacing: 0.3,
@@ -431,7 +342,7 @@ class _HomePage2State extends State<HomePage2> {
                     Text(
                       "Where to?",
                       style: Theme.of(context).textTheme.headline6?.copyWith(
-                            color: ColorConstant.COLOR_BLACK,
+                            color: ColorConstant.COLOR_TEXT,
                             fontWeight: FontWeight.w600,
                           ),
                     ),
@@ -446,7 +357,7 @@ class _HomePage2State extends State<HomePage2> {
                       child: Text(
                         "MANAGE",
                         style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                            color: Colors.blue[800],
+                            color: ColorConstant.THEME_COLOR_RED,
                             fontWeight: FontWeight.w600,
                             letterSpacing: 0.3),
                       ),
@@ -494,7 +405,7 @@ class _HomePage2State extends State<HomePage2> {
                                     .textTheme
                                     .headline6
                                     ?.copyWith(
-                                      color: ColorConstant.COLOR_BLACK,
+                                      color: ColorConstant.COLOR_TEXT,
                                       fontWeight: FontWeight.w600,
                                     ),
                               ),
@@ -503,7 +414,7 @@ class _HomePage2State extends State<HomePage2> {
                                 "12 minutes",
                                 style: Theme.of(context)
                                     .textTheme
-                                    .subtitle1
+                                    .bodyText2
                                     ?.copyWith(
                                       color: ColorConstant.COLOR_ORIGINAL_GREY,
                                       fontWeight: FontWeight.w600,
@@ -545,7 +456,7 @@ class _HomePage2State extends State<HomePage2> {
                                     .textTheme
                                     .headline6
                                     ?.copyWith(
-                                      color: ColorConstant.COLOR_BLACK,
+                                      color: const Color(0xFF292929),
                                       fontWeight: FontWeight.w600,
                                     ),
                               ),
@@ -554,7 +465,7 @@ class _HomePage2State extends State<HomePage2> {
                                 "12 minutes",
                                 style: Theme.of(context)
                                     .textTheme
-                                    .subtitle1
+                                    .bodyText2
                                     ?.copyWith(
                                       color: ColorConstant.COLOR_ORIGINAL_GREY,
                                       fontWeight: FontWeight.w600,
@@ -572,7 +483,6 @@ class _HomePage2State extends State<HomePage2> {
                           padding: const EdgeInsets.fromLTRB(30, 25, 30, 25),
                           decoration: const BoxDecoration(
                             color: ColorConstant.COLOR_WHITE,
-                            // borderRadius: BorderRadius.circular(20),
                           ),
                           child: Column(
                             children: [
@@ -596,7 +506,7 @@ class _HomePage2State extends State<HomePage2> {
                                     .textTheme
                                     .headline6
                                     ?.copyWith(
-                                      color: ColorConstant.COLOR_BLACK,
+                                      color: ColorConstant.COLOR_TEXT,
                                       fontWeight: FontWeight.w600,
                                     ),
                               ),
@@ -605,7 +515,7 @@ class _HomePage2State extends State<HomePage2> {
                                 "12 minutes",
                                 style: Theme.of(context)
                                     .textTheme
-                                    .subtitle1
+                                    .bodyText2
                                     ?.copyWith(
                                       color: ColorConstant.COLOR_ORIGINAL_GREY,
                                       fontWeight: FontWeight.w600,
@@ -647,16 +557,16 @@ class _HomePage2State extends State<HomePage2> {
                   children: [
                     Text("Find a route",
                         style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                              color: ColorConstant.COLOR_BLACK,
-                              fontWeight: FontWeight.w600,
+                              color: ColorConstant.COLOR_TEXT,
+                              fontWeight: FontWeight.w500,
                             )),
                     Row(
                       children: [
                         Text("3:06pm dropoff",
                             style:
                                 Theme.of(context).textTheme.subtitle1?.copyWith(
-                                      color: ColorConstant.COLOR_BLACK,
-                                      fontWeight: FontWeight.w600,
+                                      color: ColorConstant.COLOR_TEXT,
+                                      fontWeight: FontWeight.w500,
                                     )),
                         const SizedBox(
                           width: 5,

@@ -15,45 +15,49 @@ class AppTheme {
 
   static TextTheme _buildTextTheme(TextTheme base) {
     return base.copyWith(
-      headline6: GoogleFonts.smooch(
+      headline6: GoogleFonts.poppins(
           textStyle: TextStyle(
         color: base.headline6?.color,
         fontSize: 20,
-        fontWeight: FontWeight.w500,
+        // fontWeight: FontWeight.w500,
       )),
-      subtitle1: GoogleFonts.smooch(
-          textStyle: TextStyle(color: base.subtitle1?.color, fontSize: 18)),
-      subtitle2: GoogleFonts.smooch(
+      subtitle1: GoogleFonts.poppins(
+          textStyle: TextStyle(
+        color: base.subtitle1?.color,
+        fontSize: 18,
+        fontWeight: FontWeight.normal,
+      )),
+      subtitle2: GoogleFonts.poppins(
           textStyle: TextStyle(
               color: base.subtitle2?.color,
               fontSize: 14,
               fontWeight: FontWeight.w500)),
-      bodyText2: GoogleFonts.smooch(
+      bodyText2: GoogleFonts.poppins(
           textStyle: TextStyle(
         color: base.bodyText2?.color,
         fontSize: 16,
         fontWeight: FontWeight.normal,
       )),
-      bodyText1: GoogleFonts.smooch(
+      bodyText1: GoogleFonts.poppins(
           textStyle: TextStyle(color: base.bodyText1?.color, fontSize: 14)),
-      button: GoogleFonts.smooch(
+      button: GoogleFonts.poppins(
           textStyle: TextStyle(
               color: base.button?.color,
               fontSize: 14,
               fontWeight: FontWeight.w500)),
-      caption: GoogleFonts.smooch(
+      caption: GoogleFonts.poppins(
           textStyle: TextStyle(color: base.caption?.color, fontSize: 12)),
-      headline4: GoogleFonts.smooch(
+      headline4: GoogleFonts.poppins(
           textStyle: TextStyle(color: base.headline4?.color, fontSize: 34)),
-      headline3: GoogleFonts.smooch(
+      headline3: GoogleFonts.poppins(
           textStyle: TextStyle(color: base.headline3?.color, fontSize: 48)),
-      headline2: GoogleFonts.smooch(
+      headline2: GoogleFonts.poppins(
           textStyle: TextStyle(color: base.headline2?.color, fontSize: 60)),
-      headline1: GoogleFonts.smooch(
+      headline1: GoogleFonts.poppins(
           textStyle: TextStyle(color: base.headline1?.color, fontSize: 96)),
-      headline5: GoogleFonts.smooch(
+      headline5: GoogleFonts.poppins(
           textStyle: TextStyle(color: base.headline5?.color, fontSize: 24)),
-      overline: GoogleFonts.smooch(
+      overline: GoogleFonts.poppins(
           textStyle: TextStyle(color: base.overline?.color, fontSize: 10)),
     );
   }
@@ -68,7 +72,6 @@ class AppTheme {
 
     final ThemeData base = ThemeData.light();
     return base.copyWith(
-      
         appBarTheme: const AppBarTheme(color: Colors.white),
         popupMenuTheme: const PopupMenuThemeData(color: Colors.white),
         colorScheme: colorScheme,

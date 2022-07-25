@@ -4,15 +4,13 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:wystle/push_notification/push_notification.dart';
 
 class Messaging {
-
-  static void showMessage(){
+  static void showMessage() {
     FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
     // firebaseMessaging.getToken().then((value) => storeToken(value));
     // // print('fcm token ${fcm_token}');
     // // storeToken(fcm_token);
 
-    
     FirebaseMessaging.instance.getInitialMessage().then((message) {
       if (message != null) {
         final routeFromMessage = message.data['route'];

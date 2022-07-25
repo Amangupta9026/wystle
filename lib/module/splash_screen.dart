@@ -1,16 +1,15 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:location/location.dart';
-import 'package:wystle/auth/onboarding.dart';
 import 'package:wystle/constant/color_constant.dart';
 import 'package:wystle/constant/image_constant.dart';
 import 'package:wystle/module/homepage/homepage.dart';
 import 'package:wystle/module/sharedpreference/shared_preference.dart';
 
 import '../service/api_constants.dart';
-import '../testing/location_custom.dart';
+import '../widget/location_custom.dart';
+import 'auth/onboarding.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -42,53 +41,52 @@ class _SplashPageState extends State<SplashPage> {
   _loadNextScreen() async {
     if (!mounted) return;
 
-      if (SharedPreference.getValue(PrefConstants.IS_LOGIN,
-          defaultValue: false)) {
-        Timer(const Duration(seconds: 1), () async {
-          var location = Location();
-          bool enabled = await location.serviceEnabled();
-          if (!enabled) {
-            Navigator.pushAndRemoveUntil<dynamic>(
-              context,
-              MaterialPageRoute<dynamic>(
-                builder: (BuildContext context) => const LocationCustom(),
-              ),
-              (route) => false,
-            );
-          } else {
-            Navigator.pushAndRemoveUntil<dynamic>(
-              context,
-              MaterialPageRoute<dynamic>(
-                builder: (BuildContext context) => const HomePage2(),
-              ),
-              (route) => false,
-            );
-          }
-        });
-      } else {
-        Timer(const Duration(seconds: 3), () {
-          if (mounted) {
-            Navigator.pushAndRemoveUntil<dynamic>(
-              context,
-              MaterialPageRoute<dynamic>(
-                builder: (BuildContext context) => const OnBoarding(),
-              ),
-              (route) => false,
-            );
-          }
-        });
-      }
-    
+    if (SharedPreference.getValue(PrefConstants.IS_LOGIN,
+        defaultValue: false)) {
+      Timer(const Duration(seconds: 1), () async {
+        var location = Location();
+        bool enabled = await location.serviceEnabled();
+        if (!enabled) {
+          Navigator.pushAndRemoveUntil<dynamic>(
+            context,
+            MaterialPageRoute<dynamic>(
+              builder: (BuildContext context) => const LocationCustom(),
+            ),
+            (route) => false,
+          );
+        } else {
+          Navigator.pushAndRemoveUntil<dynamic>(
+            context,
+            MaterialPageRoute<dynamic>(
+              builder: (BuildContext context) => const HomePage2(),
+            ),
+            (route) => false,
+          );
+        }
+      });
+    } else {
+      Timer(const Duration(seconds: 3), () {
+        if (mounted) {
+          Navigator.pushAndRemoveUntil<dynamic>(
+            context,
+            MaterialPageRoute<dynamic>(
+              builder: (BuildContext context) => const OnBoarding(),
+            ),
+            (route) => false,
+          );
+        }
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-    ]);
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent, // transparent status bar
-    ));
+    // SystemChrome.setPreferredOrientations([
+    //   DeviceOrientation.portraitUp,
+    // ]);
+    // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    //   statusBarColor: Colors.red, // transparent status bar
+    // ));
     return Material(
       child: Scaffold(
         backgroundColor: ColorConstant.COLOR_BLACK,

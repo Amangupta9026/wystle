@@ -13,7 +13,6 @@ class ImgConstants {
   static const String WYSTLEAPPICON = 'assets/images/wystle_app_icon.svg';
   static const String WYSTLEARRIVESMARTER = 'assets/images/arrive_smarter.png';
 
-  static const String GOOGLE_LOGO = 'assets/images/googleicon.png';
   static const String CONTRACT_ICON = 'assets/images/contract.png';
   static const String HOME_PAGE_PROMO_ICON = 'assets/images/gift.png';
   static const String HOME_PAGE_CAR1 = 'assets/images/homepage_car1.png';
@@ -35,6 +34,8 @@ class ImgConstants {
   
   static const String PROMO_CODE2 = 'assets/images/promocoupon.png';
   static const String PERSON_ICON = 'assets/images/person_icon.png';
+
+   static const String PRIVACY_CENTER = 'assets/images/privacy_center.png';
 
    
 }

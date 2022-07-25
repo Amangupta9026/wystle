@@ -181,7 +181,7 @@ class _SearchLocationMapState extends State<SearchLocationMap> {
                                           .textTheme
                                           .subtitle1
                                           ?.copyWith(
-                                            color: ColorConstant.COLOR_BLACK,
+                                            color: ColorConstant.COLOR_TEXT,
                                             fontWeight: FontWeight.w600,
                                           ),
                                     ),
@@ -219,7 +219,7 @@ class _SearchLocationMapState extends State<SearchLocationMap> {
                                               .subtitle1
                                               ?.copyWith(
                                                 color:
-                                                    ColorConstant.COLOR_BLACK,
+                                                    ColorConstant.COLOR_TEXT,
                                                 fontWeight: FontWeight.w600,
                                               ),
                                         ),

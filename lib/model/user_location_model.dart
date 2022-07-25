@@ -40,27 +40,42 @@ class PredResult {
   String? countryName;
   String? stateId;
   String? stateName;
+  String? districtId;
+  String? districtName;
   String? cityId;
   String? cityName;
-  List<String>? postcodeList;
+  String? cityPostcode;
+  String? areaId;
+  String? areaName;
+  String? areaPostcode;
 
   PredResult(
       {this.countryId,
       this.countryName,
       this.stateId,
       this.stateName,
+      this.districtId,
+      this.districtName,
       this.cityId,
       this.cityName,
-      this.postcodeList});
+      this.cityPostcode,
+      this.areaId,
+      this.areaName,
+      this.areaPostcode});
 
   PredResult.fromJson(Map<String, dynamic> json) {
     countryId = json['country_id'];
     countryName = json['country_name'];
     stateId = json['state_id'];
     stateName = json['state_name'];
+    districtId = json['district_id'];
+    districtName = json['district_name'];
     cityId = json['city_id'];
     cityName = json['city_name'];
-    postcodeList = json['postcode_list'].cast<String>();
+    cityPostcode = json['city_postcode'];
+    areaId = json['area_id'];
+    areaName = json['area_name'];
+    areaPostcode = json['area_postcode'];
   }
 
   Map<String, dynamic> toJson() {
@@ -69,9 +84,14 @@ class PredResult {
     data['country_name'] = countryName;
     data['state_id'] = stateId;
     data['state_name'] = stateName;
+    data['district_id'] = districtId;
+    data['district_name'] = districtName;
     data['city_id'] = cityId;
     data['city_name'] = cityName;
-    data['postcode_list'] = postcodeList;
+    data['city_postcode'] = cityPostcode;
+    data['area_id'] = areaId;
+    data['area_name'] = areaName;
+    data['area_postcode'] = areaPostcode;
     return data;
   }
 }

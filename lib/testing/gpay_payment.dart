@@ -25,67 +25,71 @@ class FlutterWavePaymentGatewayState extends State<FlutterWavePaymentGateway> {
           title: const Text('Flutter + Flutterwave'),
           centerTitle: true,
         ),
-        body: Padding(
-            padding: const EdgeInsets.only(top: 10.0),
-            child: Form(
-                key: formKey,
-                child: Column(children: [
-                  const Padding(padding: EdgeInsets.all(10.0)),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 10),
-                    child: TextFormField(
-                      controller: fullname,
-                      decoration: const InputDecoration(labelText: "Full Name"),
-                      validator: (value) =>
-                          value!.isNotEmpty ? null : "Please fill in Your Name",
+        body: SingleChildScrollView(
+          child: Padding(
+              padding: const EdgeInsets.only(left: 15, right: 15, top: 10.0),
+              child: Form(
+                  key: formKey,
+                  child: Column(children: [
+                    const Padding(padding: EdgeInsets.all(10.0)),
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 10),
+                      child: TextFormField(
+                        controller: fullname,
+                        decoration:
+                            const InputDecoration(labelText: "Full Name"),
+                        validator: (value) => value!.isNotEmpty
+                            ? null
+                            : "Please fill in Your Name",
+                      ),
                     ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 10),
-                    child: TextFormField(
-                      controller: phone,
-                      decoration:
-                          const InputDecoration(labelText: "Phone Number"),
-                      validator: (value) => value!.isNotEmpty
-                          ? null
-                          : "Please fill in Your Phone number",
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 10),
+                      child: TextFormField(
+                        controller: phone,
+                        decoration:
+                            const InputDecoration(labelText: "Phone Number"),
+                        validator: (value) => value!.isNotEmpty
+                            ? null
+                            : "Please fill in Your Phone number",
+                      ),
                     ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 10),
-                    child: TextFormField(
-                      controller: email,
-                      decoration: const InputDecoration(labelText: "Email"),
-                      validator: (value) => value!.isNotEmpty
-                          ? null
-                          : "Please fill in Your Email",
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 10),
+                      child: TextFormField(
+                        controller: email,
+                        decoration: const InputDecoration(labelText: "Email"),
+                        validator: (value) => value!.isNotEmpty
+                            ? null
+                            : "Please fill in Your Email",
+                      ),
                     ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 10),
-                    child: TextFormField(
-                      controller: amount,
-                      decoration: const InputDecoration(labelText: "Amount"),
-                      validator: (value) => value!.isNotEmpty
-                          ? null
-                          : "Please fill in the Amount you are Paying",
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 10),
+                      child: TextFormField(
+                        controller: amount,
+                        decoration: const InputDecoration(labelText: "Amount"),
+                        validator: (value) => value!.isNotEmpty
+                            ? null
+                            : "Please fill in the Amount you are Paying",
+                      ),
                     ),
-                  ),
-                  ElevatedButton(
-                    child: const Text('Pay with Flutterwave'),
-                    onPressed: () {
-                      final name = fullname.text;
-                      final userPhone = phone.text;
-                      final userEmail = email.text;
-                      final amountPaid = amount.text;
+                    ElevatedButton(
+                      child: const Text('Pay with Flutterwave'),
+                      onPressed: () {
+                        final name = fullname.text;
+                        final userPhone = phone.text;
+                        final userEmail = email.text;
+                        final amountPaid = amount.text;
 
-                      if (formKey.currentState!.validate()) {
-                        _makeFlutterwavePayment(
-                            context, name, userPhone, userEmail, amountPaid);
-                      }
-                    },
-                  ),
-                ]))));
+                        if (formKey.currentState!.validate()) {
+                          _makeFlutterwavePayment(
+                              context, name, userPhone, userEmail, amountPaid);
+                        }
+                      },
+                    ),
+                  ]))),
+        ));
   }
 
   //Add a method to make the flutter wave payment
@@ -107,14 +111,14 @@ class FlutterWavePaymentGatewayState extends State<FlutterWavePaymentGateway> {
           txRef: DateTime.now().toIso8601String(),
           //Setting DebugMode below to true since will be using test mode.
           //You can set it to false when using production environment.
-          isDebugMode: true,
+          isDebugMode: false,
           //configure the the type of payments that your business will accept
-          acceptCardPayment: false,
+          acceptCardPayment: true,
           acceptUSSDPayment: false,
           acceptAccountPayment: false,
           acceptFrancophoneMobileMoney: false,
           acceptGhanaPayment: false,
-          acceptMpesaPayment: true,
+          acceptMpesaPayment: false,
           acceptRwandaMoneyPayment: false,
           acceptUgandaPayment: false,
           acceptZambiaPayment: false);

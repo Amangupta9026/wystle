@@ -29,7 +29,7 @@ class AppBarWidget extends StatelessWidget {
                 title ?? '',
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.headline5?.copyWith(
-                      color: ColorConstant.COLOR_BLACK,
+                      color: ColorConstant.COLOR_TEXT,
                       fontWeight: FontWeight.w500,
                     ),
               ),
@@ -43,11 +43,11 @@ class AppBarWidget extends StatelessWidget {
         text1 != null
             ? Column(
                 children: [
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 20),
                   Text(
                     text1.toString(),
                     style: Theme.of(context).textTheme.headline5?.copyWith(
-                          color: ColorConstant.COLOR_BLACK,
+                          color: ColorConstant.COLOR_TEXT,
                           fontWeight: FontWeight.w500,
                         ),
                   ),

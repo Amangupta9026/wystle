@@ -44,7 +44,7 @@ class MaterialButton1 extends StatelessWidget {
               txt1.toString(),
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                    color: ColorConstant.COLOR_WHITE,
+                    color: textColor1 ?? ColorConstant.COLOR_WHITE,
                     fontWeight: FontWeight.w400,
                   ),
             ),
@@ -182,14 +182,12 @@ class TextFieldWithOnlyPlaceHolder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      elevation: 1.0,
-      shadowColor: ColorConstant.COLOR_ORIGINAL_GREY,
-
-      //  padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+    return Container(
+      decoration:
+          BoxDecoration(border: Border.all(color: ColorConstant.COLOR_BLACK)),
       child: TextFormField(
         style: Theme.of(context).textTheme.subtitle1?.copyWith(
-              color: ColorConstant.COLOR_BLACK,
+              color: ColorConstant.COLOR_TEXT,
               fontWeight: FontWeight.w400,
               decoration: TextDecoration.none,
             ),
@@ -199,38 +197,19 @@ class TextFieldWithOnlyPlaceHolder extends StatelessWidget {
         maxLines: maxlines ?? 1,
         keyboardType: keyboardType1 ?? TextInputType.name,
         decoration: InputDecoration(
-          isDense: true,
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+          // isDense: true,
           enabled: enabledTextField ?? true,
           hintText: text1.toString(),
           hintStyle: Theme.of(context).textTheme.subtitle1?.copyWith(
                 color: ColorConstant.COLOR_ORIGINAL_GREY,
                 fontWeight: FontWeight.w400,
               ),
-          focusedBorder: const OutlineInputBorder(
-            borderSide:
-                BorderSide(width: 1, color: ColorConstant.COLOR_LIGHT_BLACK),
-            borderRadius: BorderRadius.all(
-              Radius.circular(0.0),
-            ),
-          ),
-          border: const OutlineInputBorder(
-            borderSide:
-                BorderSide(width: 0.3, color: ColorConstant.COLOR_LIGHT_BLACK),
-            borderRadius: BorderRadius.all(
-              Radius.circular(0.0),
-            ),
-          ),
+          focusedBorder: InputBorder.none,
+          border: InputBorder.none,
         ),
       ),
     );
   }
 }
-
-// class TextFormField extends StatelessWidget {
-//   const TextFormField({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container();
-//   }
-// }

@@ -53,5 +53,7 @@ class PrefConstants {
   static const String USER_CITY = "userCity";
   static const String USER_COUNTRY = "userCountry";
   static const String USER_STATE = "userState";
+  static const String LOCALITY = "userSubLocalLocation";
   static const String IP_ADDRESS = "ipAddress";
+  static const String USER_LOCATION_DATA = "userLocationData";
 }

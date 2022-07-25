@@ -49,31 +49,31 @@ dependencies:
   flutter_pdfview: ^1.2.2
   path_provider: ^2.0.10
   url_launcher: ^6.1.2
-  flex_color_scheme: ^5.0.1
+  # flex_color_scheme: ^5.0.1
   share_plus: ^4.0.4
-  sliding_sheet: ^0.5.2
+  # sliding_sheet: ^0.5.2
   device_preview: ^1.1.0
   google_place: ^0.4.7
   location_geocoder: ^1.0.5
   image_picker: ^0.8.5+3
   permission_handler: ^9.2.0
-  another_flushbar: ^1.10.29
+  # another_flushbar: ^1.10.29
   flutter_map_tappable_polyline: ^3.1.0
   dart_ipify: ^1.1.1
   firebase_core: ^1.18.0
   firebase_messaging: ^11.4.2
   firebase_crashlytics: ^2.8.2
   flutter_local_notifications: ^9.6.1
-  provider: ^6.0.3
-  workmanager: ^0.5.0
-  firebase_in_app_messaging: ^0.6.0+16
+  # provider: ^6.0.3
+  # firebase_in_app_messaging: ^0.6.0+16
   firebase_analytics: ^9.1.10
   fluttertoast: ^8.0.9
   flutter_masked_text2: ^0.9.1
   flutter_neumorphic: ^3.2.0
   pay: ^1.0.10
   flutterwave: ^1.0.1
-  stop_watch_timer: ^1.5.0
+  # stop_watch_timer: ^1.5.0
+  flutter_easyloading: ^3.0.5
   
   
   
@@ -100,6 +100,18 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/fonts/
+
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Light.ttf
+        - asset: assets/fonts/Poppins-Regular.ttf
+        - asset: assets/fonts/Poppins-Medium.ttf
+        - asset: assets/fonts/Poppins-SemiBold.ttf
+        - asset: assets/fonts/Poppins-Bold.ttf
+        - asset: assets/fonts/Poppins-Thin.ttf
+        - asset: assets/fonts/Poppins-ExtraLight.ttf
   
 
   # An image asset can refer to one or more resolution-specific "variants", see

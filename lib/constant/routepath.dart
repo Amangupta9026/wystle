@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wystle/auth/mobile_loginscreen.dart';
-import 'package:wystle/auth/onboarding.dart';
-
+import '../module/auth/mobile_loginscreen.dart';
+import '../module/auth/onboarding.dart';
 import '../module/splash_screen.dart';
 
 Route generateRoute(RouteSettings routeSettings) {
