@@ -5,7 +5,7 @@ import 'package:wystle/push_notification/push_notification.dart';
 
 class Messaging {
   static void showMessage() {
-    FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+    // FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
     // firebaseMessaging.getToken().then((value) => storeToken(value));
     // // print('fcm token ${fcm_token}');
@@ -23,8 +23,8 @@ class Messaging {
     FirebaseMessaging.onMessage.listen((RemoteMessage? message) {
       if (message != null) {
         PushNotificationService.display(message);
-        log("${message.notification!.body}");
-        log("${message.notification!.title}");
+        // log("${message.notification!.body}");
+        // log("${message.notification!.title}");
       }
     });
 

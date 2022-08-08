@@ -26,17 +26,17 @@ class _PersonalizationState extends State<Personalization> {
 
   void toggleSwitch(bool value) {
     if (isSwitched == false) {
-      setState(() {
-        isSwitched = true;
-        textValue = 'ON';
-      });
-      log('Switch Button is ON');
+      if (mounted) {
+        setState(() {
+          isSwitched = true;
+        });
+      }
     } else {
-      setState(() {
-        isSwitched = false;
-        textValue = 'OFF';
-      });
-      log('Switch Button is OFF');
+      if (mounted) {
+        setState(() {
+          isSwitched = false;
+        });
+      }
     }
   }
 

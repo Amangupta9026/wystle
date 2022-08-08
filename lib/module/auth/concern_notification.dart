@@ -580,10 +580,10 @@ class _ConcernNotificationState extends State<ConcernNotification> {
   Future<void> checkInternet() async {
     isInternetCheck = await InternetUtils.internetCheck();
     if (isInternetCheck) {
-      // log("Internet is connected");
+     
     } else {
       InternetUtils.networkErrorDialog(context);
-      // log("Internet is not connected");
+    
     }
   }
 }

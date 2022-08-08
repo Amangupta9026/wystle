@@ -36,6 +36,9 @@ class ImgConstants {
   static const String PERSON_ICON = 'assets/images/person_icon.png';
 
    static const String PRIVACY_CENTER = 'assets/images/privacy_center.png';
+   static const String ORIGIN_DESTINATION_ICON = 'assets/images/originDestinationDistanceIcon.png';
+
+   
 
    
 }

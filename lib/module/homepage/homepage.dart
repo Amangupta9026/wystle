@@ -1,21 +1,21 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
 import 'package:intl/intl.dart';
 import 'package:wystle/constant/image_constant.dart';
-import 'package:wystle/testing/google_places.dart';
+import 'package:wystle/testing/gpay_testing.dart';
 
 import '../../constant/color_constant.dart';
-import '../../model/login_cookies_model.dart';
-import '../../model/user_location_model.dart';
-import '../../push_notification/firebase_messaging.dart';
+import '../../constant/map_api_key.dart';
 import '../../service/api_constants.dart';
+import '../../testing/freshchat.dart';
+import '../../testing/google_places.dart';
 import '../../utils/utils.dart';
+import '../../map/homescreen_map.dart';
+import '../../widget/reusubility_button.dart';
 import '../menu/menu_profile.dart';
 import '../sharedpreference/shared_preference.dart';
 import '../sharedpreference/userdata.dart';
-import '../../map/homescreen_map.dart';
 
 class HomePage2 extends StatefulWidget {
   final String? screencolor1;
@@ -33,27 +33,24 @@ class _HomePage2State extends State<HomePage2> {
   String? getAddress = '';
   String location = '';
   bool isOnline = false;
-  double? getlat;
-  double? getlong;
-  final String apiKey = "6ufmOlgvbUM74wskYZflYLAgZSaFXQGq";
-  final List<Marker> markers = List.empty(growable: true);
+
+  final String apiKey = tomTomMapKey;
+  // final List<Marker> markers = List.empty(growable: true);
   // final GlobalKey<ScaffoldState> _scaffoldStateKey = GlobalKey<ScaffoldState>();
   bool isProgressRunning = false;
-  LoginCookiesModel? loginCookiesModel;
-  var now = DateTime.now();
-  var formatterDate = DateFormat('dd/MM/yy');
-  var formatterTime = DateFormat('kk:mm');
-  UserLocationModel? userLocationModel;
-  var userdata = UserData.geUserData();
 
-  // googlemapflutter.LatLng startLocation =
-  //     const googlemapflutter.LatLng(26.7489716, 83.3588597);
+  var userdata = UserData.geUserData();
+  TextEditingController dateinput = TextEditingController(
+      text: DateFormat('dd-MM-yyyy').format(DateTime.now()));
+  TimeOfDay selectedTime = TimeOfDay.now();
+  var add10MinuteTime;
+  // add10MinuteTime = TimeOfDay.now();
 
   @override
   void initState() {
     super.initState();
     checkInternet();
-    Messaging.showMessage();
+    // Messaging.showMessage();
     log(SharedPreference.getValue(PrefConstants.USER_DATA));
     log(SharedPreference.getValue(PrefConstants.USER_LOCATION_DATA));
   }
@@ -64,26 +61,19 @@ class _HomePage2State extends State<HomePage2> {
     //     statusBarColor: widget.screencolor1 != null
     //         ? Color(int.tryParse('0xFF${widget.screencolor1}')!)
     //         : ColorConstant.THEME_COLOR_RED));
-    return Container(
-      color: widget.screencolor1 != null
-          ? Color(int.tryParse('0xFF${widget.screencolor1}')!)
-          : ColorConstant.THEME_COLOR_RED,
-      child: Scaffold(
-        // key: _scaffoldStateKey,
-        // drawer: const DrawerScreen(),
-        body: SafeArea(
-          child: SingleChildScrollView(
-            physics: const ClampingScrollPhysics(),
-            child: Stack(
-              children: [
-                Container(
-                  color: const Color(0xFFf2f2f4),
-                  // color: Theme.of(context).colorScheme.primaryVariant,
-                ),
-                backgroundWidget(context),
-                foregroundWidget(context),
-              ],
-            ),
+    return Scaffold(
+      // backgroundColor:,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
+          child: Stack(
+            children: [
+              Container(
+                color: const Color(0xFFf2f2f4),
+              ),
+              backgroundWidget(context),
+              foregroundWidget(context),
+            ],
           ),
         ),
       ),
@@ -210,10 +200,9 @@ class _HomePage2State extends State<HomePage2> {
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(10, 35, 10, 0),
                   child: Container(
-                    decoration:
-                        const BoxDecoration(color: ColorConstant.COLOR_WHITE,
-                            // borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
+                    decoration: const BoxDecoration(
+                        color: ColorConstant.COLOR_WHITE,
+                        boxShadow: [
                           BoxShadow(
                             offset: Offset(1, 1),
                             color: Colors.grey,
@@ -286,12 +275,12 @@ class _HomePage2State extends State<HomePage2> {
                         ),
 
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(15.0, 0, 15, 10),
+                          padding: const EdgeInsets.fromLTRB(10.0, 0, 10, 10),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              TextButton(
-                                onPressed: () {},
+                              InkWell(
+                                onTap: () {},
                                 child: Text(
                                   "CHANGE",
                                   style: Theme.of(context)
@@ -305,15 +294,19 @@ class _HomePage2State extends State<HomePage2> {
                                       ),
                                 ),
                               ),
-                              Text(
-                                "12 drivers nearby",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle2
-                                    ?.copyWith(
-                                      color: ColorConstant.COLOR_ORIGINAL_GREY,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                              Expanded(
+                                child: Text(
+                                  "12 drivers nearby",
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle2
+                                      ?.copyWith(
+                                        color:
+                                            ColorConstant.COLOR_ORIGINAL_GREY,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                ),
                               ),
                               Text(
                                 "7m pickup",
@@ -348,11 +341,11 @@ class _HomePage2State extends State<HomePage2> {
                     ),
                     TextButton(
                       onPressed: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //       builder: (context) => GoogleMapRouteNav()),
-                        // );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const FreshChatDemo()),
+                        );
                       },
                       child: Text(
                         "MANAGE",
@@ -365,8 +358,93 @@ class _HomePage2State extends State<HomePage2> {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 5,
+
+              // Find route List
+
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0.0, 5, 15, 20),
+                child: Card(
+                  elevation: 4,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 5,
+                        child: InkWell(
+                          splashColor: ColorConstant.COLOR_LIGHT_GREY,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => GoogleSearchPlace(
+                                        yourLocation: getAddress,
+                                      )),
+                            );
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.fromLTRB(15, 16, 0, 16),
+                            decoration: BoxDecoration(
+                              color: ColorConstant.COLOR_WHITE.withOpacity(0.2),
+                            ),
+                            child: Row(children: [
+                              const Icon(Icons.search),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Text('Find route?',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle1
+                                      ?.copyWith(
+                                        color: ColorConstant.COLOR_TEXT,
+                                        fontWeight: FontWeight.w500,
+                                      )),
+                            ]),
+                          ),
+                        ),
+                      ),
+                      //
+                      Expanded(
+                        flex: 3,
+                        child: InkWell(
+                          splashColor: ColorConstant.COLOR_LIGHT_GREY,
+                          onTap: () {
+                            getScheduleRideBottomSheet();
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.fromLTRB(5, 12, 5, 12),
+                            decoration: const BoxDecoration(
+                              color: ColorConstant.COLOR_WHITE,
+                            ),
+                            child: Container(
+                                padding: const EdgeInsets.fromLTRB(10, 5, 6, 5),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: ColorConstant.COLOR_TEXT),
+                                  color: ColorConstant.COLOR_WHITE,
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                child: Row(
+                                  children: [
+                                    const Icon(Icons.schedule),
+                                    const SizedBox(width: 5),
+                                    Text('Now',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText2
+                                            ?.copyWith(
+                                              color: ColorConstant.COLOR_TEXT,
+                                              fontWeight: FontWeight.w500,
+                                            )),
+                                    const SizedBox(width: 3),
+                                    const Icon(Icons.expand_more),
+                                  ],
+                                )),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
 
               // Place List
@@ -375,6 +453,66 @@ class _HomePage2State extends State<HomePage2> {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const Gpay()),
+                        );
+                      },
+                      child: Card(
+                        elevation: 3,
+                        child: Container(
+                            padding: const EdgeInsets.fromLTRB(30, 25, 30, 25),
+                            decoration: const BoxDecoration(
+                              color: ColorConstant.COLOR_WHITE,
+                              // borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Column(
+                              children: [
+                                Container(
+                                  decoration: const BoxDecoration(
+                                      color: ColorConstant.COLOR_LIGHT_BLACK,
+                                      shape: BoxShape.circle),
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(12.0),
+                                    child: Icon(
+                                      Icons.home,
+                                      color: ColorConstant.COLOR_WHITE,
+                                      size: 30,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  "home",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline6
+                                      ?.copyWith(
+                                        color: ColorConstant.COLOR_TEXT,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                ),
+                                const SizedBox(height: 3),
+                                Text(
+                                  "12 minutes",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2
+                                      ?.copyWith(
+                                        color:
+                                            ColorConstant.COLOR_ORIGINAL_GREY,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                ),
+                              ],
+                            )),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
                     Card(
                       elevation: 3,
                       child: Container(
@@ -387,12 +525,12 @@ class _HomePage2State extends State<HomePage2> {
                             children: [
                               Container(
                                 decoration: const BoxDecoration(
-                                    color: ColorConstant.COLOR_BLACK,
+                                    color: ColorConstant.COLOR_LIGHT_BLACK,
                                     shape: BoxShape.circle),
                                 child: const Padding(
                                   padding: EdgeInsets.all(12.0),
                                   child: Icon(
-                                    Icons.home,
+                                    Icons.work,
                                     color: ColorConstant.COLOR_WHITE,
                                     size: 30,
                                   ),
@@ -400,7 +538,7 @@ class _HomePage2State extends State<HomePage2> {
                               ),
                               const SizedBox(height: 10),
                               Text(
-                                "home",
+                                "Work",
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline6
@@ -432,63 +570,12 @@ class _HomePage2State extends State<HomePage2> {
                           padding: const EdgeInsets.fromLTRB(30, 25, 30, 25),
                           decoration: const BoxDecoration(
                             color: ColorConstant.COLOR_WHITE,
-                            // borderRadius: BorderRadius.circular(20),
                           ),
                           child: Column(
                             children: [
                               Container(
                                 decoration: const BoxDecoration(
-                                    color: ColorConstant.COLOR_ORIGINAL_GREY,
-                                    shape: BoxShape.circle),
-                                child: const Padding(
-                                  padding: EdgeInsets.all(12.0),
-                                  child: Icon(
-                                    Icons.work,
-                                    color: ColorConstant.COLOR_WHITE,
-                                    size: 30,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 10),
-                              Text(
-                                "Work",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline6
-                                    ?.copyWith(
-                                      color: const Color(0xFF292929),
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                              ),
-                              const SizedBox(height: 3),
-                              Text(
-                                "12 minutes",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText2
-                                    ?.copyWith(
-                                      color: ColorConstant.COLOR_ORIGINAL_GREY,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                              ),
-                            ],
-                          )),
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Card(
-                      elevation: 3,
-                      child: Container(
-                          padding: const EdgeInsets.fromLTRB(30, 25, 30, 25),
-                          decoration: const BoxDecoration(
-                            color: ColorConstant.COLOR_WHITE,
-                          ),
-                          child: Column(
-                            children: [
-                              Container(
-                                decoration: const BoxDecoration(
-                                    color: ColorConstant.COLOR_BLACK,
+                                    color: ColorConstant.COLOR_LIGHT_BLACK,
                                     shape: BoxShape.circle),
                                 child: const Padding(
                                   padding: EdgeInsets.all(12.0),
@@ -530,61 +617,150 @@ class _HomePage2State extends State<HomePage2> {
             ],
           ),
         ),
-
-        // Find route List
-
-        InkWell(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => GoogleSearchPlace(
-                        yourLocation: getAddress,
-                      )),
-            );
-          },
-          child: Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20, bottom: 30),
-            child: Card(
-              elevation: 3,
-              child: Container(
-                padding: const EdgeInsets.fromLTRB(20, 25, 20, 25),
-                decoration: const BoxDecoration(
-                  color: ColorConstant.COLOR_WHITE,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Find a route",
-                        style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                              color: ColorConstant.COLOR_TEXT,
-                              fontWeight: FontWeight.w500,
-                            )),
-                    Row(
-                      children: [
-                        Text("3:06pm dropoff",
-                            style:
-                                Theme.of(context).textTheme.subtitle1?.copyWith(
-                                      color: ColorConstant.COLOR_TEXT,
-                                      fontWeight: FontWeight.w500,
-                                    )),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        const Icon(
-                          Icons.arrow_forward,
-                          color: ColorConstant.COLOR_ORIGINAL_GREY,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
       ],
     );
+  }
+
+  void getScheduleRideBottomSheet() {
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: false,
+        backgroundColor: Colors.transparent,
+        builder: (ctx) {
+          return Container(
+              height: MediaQuery.of(context).size.height * 0.4,
+              color: ColorConstant.COLOR_WHITE,
+              child: Column(mainAxisSize: MainAxisSize.min, children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 20.0, bottom: 12),
+                  child: Text(
+                    'Schedule a Ride',
+                    style: Theme.of(context).textTheme.headline5?.copyWith(
+                          color: ColorConstant.COLOR_TEXT,
+                          fontWeight: FontWeight.w500,
+                        ),
+                  ),
+                ),
+                const Divider(
+                  color: ColorConstant.COLOR_ORIGINAL_GREY,
+                  thickness: 0.3,
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                InkWell(
+                  onTap: () async {
+                    DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2000),
+                        lastDate: DateTime(2101));
+
+                    if (pickedDate != null) {
+                      String formattedDate =
+                          DateFormat('yyyy-MM-dd').format(pickedDate);
+
+                      setState(() {
+                        dateinput.text = formattedDate;
+                      });
+                      setState(() {});
+                    } else {
+                      log("Date is not selected");
+                    }
+                  },
+                  child: Column(
+                    children: [
+                      dateinput.text != null
+                          ? Text(dateinput.text)
+                          : Text(
+                              'Select Date',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2
+                                  ?.copyWith(
+                                    color: ColorConstant.COLOR_TEXT,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                            ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                const Divider(
+                  color: ColorConstant.COLOR_ORIGINAL_GREY,
+                  thickness: 0.3,
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                InkWell(
+                    onTap: () {
+                      _selectTime(context);
+                    },
+                    child: Text(
+                        "${selectedTime.hour}:${selectedTime.minute} - ${selectedTime.hour}:${selectedTime.minute + 10}")),
+                const SizedBox(
+                  height: 15,
+                ),
+                const Divider(
+                  color: ColorConstant.COLOR_ORIGINAL_GREY,
+                  thickness: 0.3,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => GoogleSearchPlace(
+                                yourLocation: getAddress,
+                                time: selectedTime.hour.toString() +
+                                    ":" +
+                                    selectedTime.minute.toString(),
+                              )),
+                    );
+                  },
+                  child: MaterialButton1(
+                    width1: MediaQuery.of(context).size.width * 0.75,
+                    txt1: 'Set pickup time',
+                    height1: 50,
+                  ),
+                )
+              ]));
+        });
+  }
+
+  _selectTime(BuildContext context) async {
+    final TimeOfDay? timeOfDay = await showTimePicker(
+      confirmText: "CONFIRM",
+      cancelText: "NOT NOW",
+      context: context,
+      initialTime: TimeOfDay.now(),
+      initialEntryMode: TimePickerEntryMode.dial,
+    );
+    if (timeOfDay != null && timeOfDay != selectedTime) {
+      // if(selectedTime.minute >= 60) {
+      //     selectedTime = TimeOfDay(
+      //         hour: timeOfDay.hour,
+      //         minute: timeOfDay.minute + 10);
+      //       setState(() {
+      //         add10MinuteTime = timeOfDay.hour.toString() + ":" + (timeOfDay.minute + 10).toString();
+      //       });
+      // }
+      setState(() {
+        selectedTime = timeOfDay;
+        add10MinuteTime = DateTime.now();
+        DateTime(selectedTime.hour, selectedTime.minute);
+
+        add10MinuteTime.add(const Duration(hours: 1));
+      });
+    }
+
+    setState(() {});
   }
 
   // getAddresses(value, lat, lon) async {
@@ -682,10 +858,8 @@ class _HomePage2State extends State<HomePage2> {
   Future<void> checkInternet() async {
     isOnline = await InternetUtils.internetCheck();
     if (isOnline) {
-      log("Internet is connected");
     } else {
       InternetUtils.networkErrorDialog(context);
-      log("Internet is not connected");
     }
   }
 

@@ -27,6 +27,8 @@ class APIConstants {
       "rider_email_verification_success";
   static const String API_LOGIN_AFTER_CALL = "login_rider_cookies";
   static const String API_USER_LOCATION = "predict_rider_location_from_geopoint";
+  static const String API_PRICE_LIST =
+      "get_fare_estimation_detail";
 }
 
 class PrefConstants {

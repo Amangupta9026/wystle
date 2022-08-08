@@ -264,20 +264,22 @@ class _OTPScreenState extends State<OTPScreen> {
                                         )
                                       : InkWell(
                                           onTap: () {
-                                            setState(() async {
-                                              _start = 60;
+                                            if (mounted) {
+                                              setState(() async {
+                                                _start = 60;
 
-                                              otpVerify = await APIServices
-                                                  .getOTPVerifyAPI(widget
-                                                      .mobileNumber
-                                                      .toString());
-                                              showAlertDialog(
-                                                  context,
-                                                  widget.sendOTPVerifyModel
-                                                          ?.message ??
-                                                      '');
-                                              log('otp $otpVerify');
-                                            });
+                                                otpVerify = await APIServices
+                                                    .getOTPVerifyAPI(widget
+                                                        .mobileNumber
+                                                        .toString());
+                                                showAlertDialog(
+                                                    context,
+                                                    widget.sendOTPVerifyModel
+                                                            ?.message ??
+                                                        '');
+                                                log('otp $otpVerify');
+                                              });
+                                            }
                                           },
                                           child: Text(
                                             'Resend OTP',
@@ -303,10 +305,13 @@ class _OTPScreenState extends State<OTPScreen> {
                                               toastshowDefaultSnackbar(
                                                   context, 'Please enter OTP');
                                             } else if (textEditingController1
-                                                    .text ==
-                                                widget.sendOTPVerifyModel
-                                                    ?.otpNumber
-                                                    .toString()) {
+                                                        .text ==
+                                                    widget.sendOTPVerifyModel
+                                                        ?.otpNumber
+                                                        .toString() ||
+                                                textEditingController1.text ==
+                                                    otpVerify?.otpNumber
+                                                        .toString()) {
                                               //
 
                                               if (widget.sendOTPVerifyModel

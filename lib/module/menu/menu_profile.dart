@@ -1,11 +1,13 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:wystle/module/menu/personalization/personalization.dart';
 import 'package:wystle/module/menu/profile.dart';
+import 'package:wystle/module/menu/trip_screen/trip_screen.dart';
 import 'package:wystle/module/menu/wallet.dart';
 import '../../constant/color_constant.dart';
 import '../../constant/image_constant.dart';
 import '../sharedpreference/userdata.dart';
 import 'account_setting/account_setting.dart';
+import 'help_trip_screen.dart';
 import 'message.dart';
 
 class MenuProfile extends StatelessWidget {
@@ -114,24 +116,36 @@ class MenuProfile extends StatelessWidget {
                 const SizedBox(height: 20),
                 Row(children: [
                   Expanded(
-                      child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: ColorConstant.COLOR_LIGHT_DARK_GREY),
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Column(children: [
-                              const Icon(Icons.help_sharp),
-                              const SizedBox(height: 7),
-                              Text("Help",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText2
-                                      ?.copyWith(
-                                          color: ColorConstant.COLOR_TEXT,
-                                          fontWeight: FontWeight.w600)),
-                            ]),
-                          ))),
+                      child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const HelpTripScreen(),
+                          ));
+                    },
+                    child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: ColorConstant.COLOR_LIGHT_DARK_GREY),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Column(children: [
+                            const Icon(
+                              Icons.help_sharp,
+                              color: ColorConstant.COLOR_LIGHT_BLACK,
+                            ),
+                            const SizedBox(height: 7),
+                            Text("Help",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2
+                                    ?.copyWith(
+                                        color: ColorConstant.COLOR_TEXT,
+                                        fontWeight: FontWeight.w600)),
+                          ]),
+                        )),
+                  )),
                   const SizedBox(width: 10),
                   Expanded(
                       child: InkWell(
@@ -151,7 +165,10 @@ class MenuProfile extends StatelessWidget {
                                   padding: const EdgeInsets.all(12.0),
                                   child: Column(
                                     children: [
-                                      const Icon(Icons.account_balance_wallet),
+                                      const Icon(
+                                        Icons.account_balance_wallet,
+                                        color: ColorConstant.COLOR_LIGHT_BLACK,
+                                      ),
                                       const SizedBox(height: 7),
                                       Text("Wallet",
                                           style: Theme.of(context)
@@ -167,25 +184,35 @@ class MenuProfile extends StatelessWidget {
                     width: 10,
                   ),
                   Expanded(
-                      child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: ColorConstant.COLOR_LIGHT_DARK_GREY),
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Column(children: [
-                              const Icon(Icons.wallet_travel,
-                                  color: ColorConstant.COLOR_BLACK),
-                              const SizedBox(height: 7),
-                              Text("Trips",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText2
-                                      ?.copyWith(
-                                          color: ColorConstant.COLOR_TEXT,
-                                          fontWeight: FontWeight.w600)),
-                            ]),
-                          )))
+                      child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const TripScreen(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: ColorConstant.COLOR_LIGHT_DARK_GREY),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Column(children: [
+                            const Icon(Icons.wallet_travel,
+                                color: ColorConstant.COLOR_BLACK),
+                            const SizedBox(height: 7),
+                            Text("Trips",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2
+                                    ?.copyWith(
+                                        color: ColorConstant.COLOR_TEXT,
+                                        fontWeight: FontWeight.w600)),
+                          ]),
+                        )),
+                  ))
                 ]),
                 const SizedBox(height: 30),
                 InkWell(

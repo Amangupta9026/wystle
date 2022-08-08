@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:wystle/push_notification/firebase_messaging.dart';
 
 import 'constant/routepath.dart' as routepath;
 import 'constant/themes.dart';
@@ -21,8 +24,39 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Timer? timer;
+
+  // Future<void> _apigetUserLocation() async {
+  //   Map _body = {
+  //     "predparam": {
+  //       "geo_lat": '52.677804559157366',
+  //       "geo_long": "-1.1675669896453638",
+  //     }
+  //   };
+  //   await APIServices.getUserLocationAPI();
+  // }
+
+  @override
+  void initState() {
+    super.initState();
+    Messaging.showMessage();
+    // timer = Timer.periodic(
+    //     const Duration(minutes: 1), (Timer t) => _apigetUserLocation());
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
 
   // This widget is the root of your application.
   @override
@@ -48,7 +82,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Wystle',
-       theme: AppTheme.getTheme(),
+      theme: AppTheme.getTheme(),
       initialRoute: routepath.RoutePath.initRoutePath,
       onGenerateRoute: routepath.generateRoute,
       builder: EasyLoading.init(),

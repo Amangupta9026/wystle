@@ -19,7 +19,6 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  bool isDevOpEnabled = false;
   var location = Location();
   bool enabled = false;
 
@@ -35,8 +34,6 @@ class _SplashPageState extends State<SplashPage> {
     location = Location();
     enabled = await location.serviceEnabled();
   }
-
-  // BuildContext? myContext;
 
   _loadNextScreen() async {
     if (!mounted) return;
@@ -55,38 +52,49 @@ class _SplashPageState extends State<SplashPage> {
             (route) => false,
           );
         } else {
-          Navigator.pushAndRemoveUntil<dynamic>(
-            context,
-            MaterialPageRoute<dynamic>(
-              builder: (BuildContext context) => const HomePage2(),
-            ),
-            (route) => false,
-          );
+          if(mounted){
+             Navigator.pushAndRemoveUntil<dynamic>(
+              context,
+              MaterialPageRoute<dynamic>(
+                builder: (BuildContext context) => const HomePage2(),
+              ),
+              (route) => false,
+            );
+          }
+         
         }
       });
     } else {
-      Timer(const Duration(seconds: 3), () {
-        if (mounted) {
+
+      Timer(const Duration(seconds: 3), () async {
+        var location = Location();
+        bool enabled = await location.serviceEnabled();
+        if (!enabled) {
           Navigator.pushAndRemoveUntil<dynamic>(
             context,
             MaterialPageRoute<dynamic>(
-              builder: (BuildContext context) => const OnBoarding(),
+              builder: (BuildContext context) => const LocationCustom(),
             ),
             (route) => false,
           );
+        } else {
+          if (mounted) {
+            Navigator.pushAndRemoveUntil<dynamic>(
+              context,
+              MaterialPageRoute<dynamic>(
+                builder: (BuildContext context) => const OnBoarding(),
+              ),
+              (route) => false,
+            );
+          }
         }
       });
+      
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    // SystemChrome.setPreferredOrientations([
-    //   DeviceOrientation.portraitUp,
-    // ]);
-    // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    //   statusBarColor: Colors.red, // transparent status bar
-    // ));
     return Material(
       child: Scaffold(
         backgroundColor: ColorConstant.COLOR_BLACK,
@@ -106,10 +114,5 @@ class _SplashPageState extends State<SplashPage> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 }

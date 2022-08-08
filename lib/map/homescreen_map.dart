@@ -1,13 +1,13 @@
 // ignore_for_file: unused_field
 
-import 'dart:developer';
-
 import "package:flutter/material.dart";
 import "package:flutter_map/flutter_map.dart";
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart' as getlocation1;
+
+import '../constant/map_api_key.dart';
 
 // ignore: must_be_immutable
 class HomeScreenMap extends StatefulWidget {
@@ -29,7 +29,7 @@ class HomeScreenMap extends StatefulWidget {
 class _HomeScreenMapState extends State<HomeScreenMap> {
   getlocation1.LocationData? _currentPosition;
 
-  final String apiKey = "6ufmOlgvbUM74wskYZflYLAgZSaFXQGq";
+  final String apiKey = tomTomMapKey;
 
   LatLng? startLocation;
   bool isProgressRunning = false;
@@ -45,7 +45,6 @@ class _HomeScreenMapState extends State<HomeScreenMap> {
     getCurrentAddress();
     startLocation = LatLng(
         position?.latitude ?? 26.7489214, position?.longitude ?? 83.3588654);
-    //  LatLng startLocation = LatLng(position!.latitude, position!.longitude);
   }
 
   Future<void> getCurrentAddress() async {
@@ -54,39 +53,29 @@ class _HomeScreenMapState extends State<HomeScreenMap> {
     getlat = position?.latitude;
     getlng = position?.longitude;
     startLocation = LatLng(position!.latitude, position!.longitude);
-    // GetAddressFromLatLong(position);
     List<Placemark> placemarks =
         await placemarkFromCoordinates(position!.latitude, position!.longitude);
-    // print(placemarks);
+
     Placemark place = placemarks[0];
     getAddress =
         '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
     if (mounted) {
       setState(() {});
     }
-    log('street ${place.street}');
-    log('subLocality ${place.subLocality}');
-    log('locality ${place.locality}');
-    log('postalCode ${place.postalCode}');
-    log('country ${place.country}');
-
-    log(location);
+    // log('street ${place.street}');
   }
 
   @override
   Widget build(BuildContext context) {
-    // LatLng startLocation = LatLng(26.7489716, 83.3588597);
-    // LatLng endLocation = LatLng(27.6688312, 85.3077329);
-
     return Scaffold(
       body: Stack(
         children: <Widget>[
           FlutterMap(
             options: MapOptions(
-                onMapCreated: _handle(),
-                onTap: _nav(),
-                debugMultiFingerGestureWinner: true,
-                enableMultiFingerGestureRace: true,
+                // onMapCreated: _handle(),
+                // onTap: _nav(),
+                debugMultiFingerGestureWinner: false,
+                enableMultiFingerGestureRace: false,
                 allowPanningOnScrollingParent: false,
                 allowPanning: false,
                 enableScrollWheel: false,
@@ -96,11 +85,11 @@ class _HomeScreenMapState extends State<HomeScreenMap> {
             children: [
               TileLayerWidget(
                 options: TileLayerOptions(
-                    attributionBuilder: (_) {
-                      return InkWell(
-                        onTap: () {},
-                      );
-                    },
+                    // attributionBuilder: (_) {
+                    //   return InkWell(
+                    //     onTap: () {},
+                    //   );
+                    // },
                     urlTemplate: "https://api.tomtom.com/map/1/tile/basic/main/"
                         "{z}/{x}/{y}.png?key={apiKey}",
                     additionalOptions: {"apiKey": apiKey}),
@@ -124,23 +113,20 @@ class _HomeScreenMapState extends State<HomeScreenMap> {
     );
   }
 
-  _handle() {
-    log("initial value oncreatedmap print");
-  }
+  // _handle() {
+  //   log("initial value oncreatedmap print");
+  // }
 
-  _nav() {
-    // log("click");
-  }
+  // _nav() {
+  //   // log("click");
+  // }
 
   Future<Position> _getGeoLocationPosition() async {
     bool serviceEnabled;
     LocationPermission permission;
-    // Test if location services are enabled.
+
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      // Location services are not enabled don't continue
-      // accessing the position and request users of the
-      // App to enable the location services.
       await Geolocator.openLocationSettings();
       return Future.error('Location services are disabled.');
     }
@@ -148,21 +134,14 @@ class _HomeScreenMapState extends State<HomeScreenMap> {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        // Permissions are denied, next time you could try
-        // requesting permissions again (this is also where
-        // Android's shouldShowRequestPermissionRationale
-        // returned true. According to Android guidelines
-        // your App should show an explanatory UI now.
         return Future.error('Location permissions are denied');
       }
     }
     if (permission == LocationPermission.deniedForever) {
-      // Permissions are denied forever, handle appropriately.
       return Future.error(
           'Location permissions are permanently denied, we cannot request permissions.');
     }
-    // When we reach here, permissions are granted and we can
-    // continue accessing the position of the device.
+
     return await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
   }

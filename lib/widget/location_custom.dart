@@ -3,8 +3,11 @@ import 'dart:developer';
 import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
+import 'package:wystle/module/homepage/homepage.dart';
 
 import '../module/auth/onboarding.dart';
+import '../module/sharedpreference/shared_preference.dart';
+import '../service/api_constants.dart';
 
 class LocationCustom extends StatefulWidget {
   final Widget? screenname;
@@ -26,12 +29,21 @@ class _LocationCustomState extends State<LocationCustom> {
   void refreshUi() async {
     bool enabled = await location.serviceEnabled();
 
-    if (enabled) {
-      // widget.screenname ?? const OnBoarding();
+    if (enabled &&
+        SharedPreference.getValue(PrefConstants.IS_LOGIN,
+            defaultValue: false)) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => widget.screenname ?? const OnBoarding()),
-        //const OnBoarding()),
+        MaterialPageRoute(
+            builder: (context) => widget.screenname ?? const HomePage2()),
+      );
+    } else if (enabled &&
+        !SharedPreference.getValue(PrefConstants.IS_LOGIN,
+            defaultValue: false)) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => widget.screenname ?? const OnBoarding()),
       );
     } else {
       refreshUi();
@@ -65,14 +77,11 @@ class _LocationCustomState extends State<LocationCustom> {
 
         if (!enabled) {
           AppSettings.openLocationSettings();
-          // Navigator.pop(context);
         }
-        //  else
+
         if (enabled) {
           log(" enable");
-          // log(
-          //   "Latitude: ${_currentPosition!.latitude}, Longitude: ${_currentPosition!.longitude}",
-          // );
+
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const OnBoarding()),

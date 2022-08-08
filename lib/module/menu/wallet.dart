@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wystle/constant/color_constant.dart';
-import 'package:wystle/widget/appbar_widget.dart';
-import '../../testing/gpay_payment.dart';
+import '../../testing/flutter_wave.dart';
 import 'add_card.dart';
 import 'wallet_transaction.dart';
 
@@ -17,6 +16,23 @@ class _WalletState extends State<Wallet> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorConstant.COLOR_WHITE,
+      appBar: AppBar(
+        centerTitle: false,
+        backgroundColor: ColorConstant.COLOR_BLACK,
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: const Icon(
+            Icons.close,
+            color: ColorConstant.COLOR_WHITE,
+            size: 25,
+          ),
+        ),
+        title: Text('Wallet',
+            style: Theme.of(context).textTheme.headline6?.copyWith(
+                color: ColorConstant.COLOR_WHITE, fontWeight: FontWeight.w600)),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -25,12 +41,6 @@ class _WalletState extends State<Wallet> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const AppBarWidget(
-                  title: 'Wallet',
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
                 InkWell(
                   onTap: () {
                     Navigator.push(
@@ -121,7 +131,7 @@ class _WalletState extends State<Wallet> {
                         children: [
                           Container(
                             decoration: const BoxDecoration(
-                                color: ColorConstant.COLOR_BLACK),
+                                color: ColorConstant.COLOR_LIGHT_BLACK),
                             child: Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: Text(

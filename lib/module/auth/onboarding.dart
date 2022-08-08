@@ -116,10 +116,8 @@ class _OnBoardingState extends State<OnBoarding> {
   Future<void> checkInternet() async {
     isOnline = await InternetUtils.internetCheck();
     if (isOnline) {
-      log("Internet is connected");
     } else {
       InternetUtils.networkErrorDialog(context);
-      log("Internet is not connected");
     }
   }
 
@@ -136,7 +134,6 @@ class _OnBoardingState extends State<OnBoarding> {
     super.initState();
     checkInternet();
     enableLocation();
-    // getLoc();
     _apigetUserLocation();
   }
 
@@ -360,9 +357,6 @@ class _OnBoardingState extends State<OnBoarding> {
                                 longitude1: longitude1,
                               )),
                     );
-
-                    // log("Latitude print $latitude1");
-                    // log("longitude print ${longitude1.toString()}");
                   },
                   child: const Padding(
                     padding: EdgeInsets.only(top: 60, left: 12.0, right: 12),

@@ -7,7 +7,7 @@ import 'package:wystle/module/homepage/homepage.dart';
 
 import '../../../constant/color_constant.dart';
 import '../../../widget/reusubility_button.dart';
-import '../help.dart';
+import '../trip_screen/support_trip/help.dart';
 import 'helps_policy.dart';
 
 class LocationPrivacy extends StatefulWidget {
@@ -27,15 +27,15 @@ class _LocationPrivacyState extends State<LocationPrivacy> {
     if (isSwitched == false) {
       setState(() {
         isSwitched = true;
-        textValue = 'ON';
+        // textValue = 'ON';
       });
-      log('Switch Button is ON');
+      // log('Switch Button is ON');
     } else {
       setState(() {
         isSwitched = false;
-        textValue = 'OFF';
+        // textValue = 'OFF';
       });
-      log('Switch Button is OFF');
+    
     }
   }
 

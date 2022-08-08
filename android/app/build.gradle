@@ -89,6 +89,6 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:30.0.0')
     implementation 'com.google.firebase:firebase-messaging'
     implementation 'com.google.firebase:firebase-analytics:21.0.0'
-    implementation 'com.google.firebase:firebase-inappmessaging-display:17.0.4'
-    
+    implementation 'com.github.freshdesk:freshchat-android:3.3.0'
+    implementation "com.google.android.gms:play-services-wallet:18.0.0"
 }

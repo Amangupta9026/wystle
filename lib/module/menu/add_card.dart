@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import '../../constant/color_constant.dart';
-import '../../widget/appbar_widget.dart';
 import '../../widget/reusubility_button.dart';
 import '../../widget/toast_widget.dart';
 
@@ -35,22 +34,36 @@ class _AddCardState extends State<AddCard> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorConstant.COLOR_WHITE,
+      appBar: AppBar(
+        centerTitle: false,
+        backgroundColor: ColorConstant.COLOR_BLACK,
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: const Icon(
+            Icons.arrow_back,
+            color: ColorConstant.COLOR_WHITE,
+            size: 25,
+          ),
+        ),
+        title: Text('Add Card',
+            style: Theme.of(context).textTheme.headline6?.copyWith(
+                color: ColorConstant.COLOR_WHITE, fontWeight: FontWeight.w600)),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(35.0, 30, 35, 30),
+            padding: const EdgeInsets.fromLTRB(20.0, 10, 20, 30),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const AppBarWidget(
-                  text1: 'Add Card',
-                ),
                 const SizedBox(
                   height: 20,
                 ),
                 Text(
                   'Card holder name',
-                  style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                  style: Theme.of(context).textTheme.bodyText2?.copyWith(
                         color: ColorConstant.COLOR_TEXT,
                         fontWeight: FontWeight.w400,
                       ),
@@ -68,7 +81,7 @@ class _AddCardState extends State<AddCard> {
                 ),
                 Text(
                   'Card number',
-                  style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                  style: Theme.of(context).textTheme.bodyText2?.copyWith(
                         color: ColorConstant.COLOR_TEXT,
                         fontWeight: FontWeight.w400,
                       ),
@@ -97,7 +110,7 @@ class _AddCardState extends State<AddCard> {
                           Text(
                             'Expiry Date',
                             style:
-                                Theme.of(context).textTheme.subtitle1?.copyWith(
+                                Theme.of(context).textTheme.bodyText2?.copyWith(
                                       color: ColorConstant.COLOR_TEXT,
                                       fontWeight: FontWeight.w400,
                                     ),
@@ -105,15 +118,6 @@ class _AddCardState extends State<AddCard> {
                           const SizedBox(
                             height: 10,
                           ),
-                          // const SizedBox(
-                          // height: 50,
-                          //   child: TextFieldWithOnlyPlaceHolder(
-                          //     // controller1: subjectController,
-                          //     text1: 'Expiry Date',
-                          //     keyboardType1: TextInputType.number,
-                          //   ),
-                          // ),
-
                           Container(
                             decoration: BoxDecoration(
                                 border: Border.all(
@@ -122,7 +126,7 @@ class _AddCardState extends State<AddCard> {
                               controller: expiryDateController,
                               style: Theme.of(context)
                                   .textTheme
-                                  .subtitle1
+                                  .bodyText2
                                   ?.copyWith(
                                     color: ColorConstant.COLOR_TEXT,
                                     fontWeight: FontWeight.w400,
@@ -165,7 +169,7 @@ class _AddCardState extends State<AddCard> {
                           Text(
                             'CVV',
                             style:
-                                Theme.of(context).textTheme.subtitle1?.copyWith(
+                                Theme.of(context).textTheme.bodyText2?.copyWith(
                                       color: ColorConstant.COLOR_TEXT,
                                       fontWeight: FontWeight.w400,
                                     ),
@@ -201,7 +205,7 @@ class _AddCardState extends State<AddCard> {
                   child: const MaterialButton1(
                     height1: 48,
                     txt1: 'SAVE',
-                    color1: ColorConstant.THEME_COLOR_RED,
+                    color1: ColorConstant.COLOR_LIGHT_BLACK,
                   ),
                 )
               ],

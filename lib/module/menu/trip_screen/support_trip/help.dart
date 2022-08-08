@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../constant/color_constant.dart';
-import '../../widget/reusubility_button.dart';
+import '../../../../constant/color_constant.dart';
+import '../../../../widget/reusubility_button.dart';
 
 class HelpScreen extends StatelessWidget {
   HelpScreen({Key? key}) : super(key: key);
@@ -42,6 +42,7 @@ class HelpScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.fromLTRB(25.0, 40, 25, 30),
             child: Column(
@@ -118,11 +119,13 @@ class HelpScreen extends StatelessWidget {
                             ),
                             Text(
                               'Call',
-                              style:
-                                  Theme.of(context).textTheme.subtitle2?.copyWith(
-                                        color: ColorConstant.COLOR_TEXT,
-                                        fontWeight: FontWeight.w300,
-                                      ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle2
+                                  ?.copyWith(
+                                    color: ColorConstant.COLOR_TEXT,
+                                    fontWeight: FontWeight.w300,
+                                  ),
                             ),
                           ],
                         ),

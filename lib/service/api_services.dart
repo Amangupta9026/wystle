@@ -15,6 +15,7 @@ import '../model/login_cookies_model.dart';
 import '../model/login_flash_model.dart';
 import '../model/login_model.dart';
 import '../model/otpverify_model.dart';
+import '../model/price_estimation_model.dart';
 import '../model/user_location_model.dart';
 import '../model/verify_registry_model.dart';
 import '../module/sharedpreference/shared_preference.dart';
@@ -169,11 +170,11 @@ class APIServices {
 
     try {
       Map apiParam = {
-        "userid": userdata.userid,
-        "countryid": userLocation.countryId,
-        "stateid": userLocation.stateId,
-        "districtid": userLocation.districtId,
-        "cityid": userLocation.cityId,
+        "userid": userdata.userid ?? '',
+        "countryid": userLocation.countryId ?? '',
+        "stateid": userLocation.stateId ?? '',
+        "districtid": userLocation.districtId ?? '',
+        "cityid": userLocation.cityId ?? '',
       };
       var response = await dio.post(
           APIConstants.API_CALL_URL + APIConstants.API_CONCERN_NOTIFICATION,
@@ -346,6 +347,7 @@ class APIServices {
               PrefConstants.USER_DATA, jsonEncode(loginData.userDetail));
           SharedPreference.setValue(PrefConstants.USER_EMAIL_VERIFY_TAG,
               loginData.userDetail?.emailverifytag);
+
           await getUserLocationAPI();
           await getAfterLoginAPI();
         }
@@ -370,21 +372,35 @@ class APIServices {
     }
   }
 
+  // static Future<void> enableLocation() async {
+  //   location1.LocationData _currentPosition;
+  //   location1.Location location = location1.Location();
+  //   // LatLng initialcameraposition = LatLng(0.5937, 0.9629);
+  //   await location.serviceEnabled();
+
+  //   _currentPosition = await location.getLocation();
+  //   LatLng initialcameraposition = LatLng(_currentPosition.latitude!.toDouble(),
+  //       _currentPosition.longitude!.toDouble());
+  //   log("${_currentPosition.latitude} : ${_currentPosition.longitude}");
+  //   // location.onLocationChanged. listen((location1.LocationData currentLocation) {
+  //   // log("${_currentPosition.latitude} : ${_currentPosition.longitude}");
+  //   // });
+  // }
+
   // Get City Name, State Name, Country Name
 
   static Future<UserLocationModel> getUserLocationAPI() async {
     try {
       Map _body = {
         "predparam": {
-          "geo_lat": '51.44244732098324',
-          "geo_long": "-0.4145904688180463",
+          "geo_lat": '52.677804559157366',
+          "geo_long": "-1.1675669896453638",
         }
       };
       var response = await dio.post(
-          'http://wystlegeo.k2ai.com/be_api/admin/aimodules/predict_rider_location_from_geopoint',
-          
+          APIConstants.API_CALL_URL + APIConstants.API_USER_LOCATION,
           data: _body);
-      log(_body.toString());
+
       if (response.statusCode == 200) {
         log("${response.data}", name: 'getUserLocationAPI');
         var userLocationData = UserLocationModel.fromJson(response.data);
@@ -400,11 +416,9 @@ class APIServices {
       } else {
         log("Response data rather than 200");
         return UserLocationModel(
-           status: "false",
+          status: "false",
           message: "Something went wrong",
-          );
-          
-        
+        );
       }
     } catch (e) {
       //  log("$e");
@@ -591,135 +605,44 @@ class APIServices {
     }
   }
 
-  // // After LOgin API Call
+  // Get Price List API
 
-  // static Future<dynamic> getAfterLoginAPI(
-  //   String location,
-  //   String country,
-  //   String state,
-  //   String city,
-  //   String ipadd,
-  //   String device,
-  //   String deviceId,
-  //   String devicebrand,
-  //   String deviceMfg,
-  //   String deviceName,
-  //   String deviceOs,
-  //   String dateTime,
-  // ) async {
-  //   try {
-  //     var userdata = UserData.geUserData();
+  static Future<PriceEstimationModel> getPriceListAPI(Map apiParam) async {
+    try {
+      var userdata = UserData.geUserData();
 
-  //     Map _body = {
-  //       "userid": userdata.userid,
-  //       "location": location,
-  //       "country": country,
-  //       "state": state,
-  //       "city": city,
-  //       "ipadd": ipadd,
-  //       "device": device,
-  //       "deviceid": deviceId,
-  //       "devicebrand": devicebrand,
-  //       "devicemfg": deviceMfg,
-  //       "devicename": deviceName,
-  //       "deviceos": deviceOs,
-  //       "time": dateTime
-  //     };
-  //     log('before ${_body.toString()}');
-  //     var response = await dio.post(
-  //         APIConstants.API_CALL_URL + APIConstants.API_LOGIN_AFTER_CALL,
-  //         options: Options(
-  //           headers: {
-  //             "authtoken": userdata.authToken,
-  //           },
-  //         ),
-  //         data: _body);
-  //     // log(_body.toString());
-  //     if (response.statusCode == 200) {
-  //       log("${response.data}");
-  //       return LoginCookiesModel.fromJson(response.data);
-  //     } else {
-  //       log("Response data rather than 200");
-  //       return {
-  //         "status": "false",
-  //         "message": "Something went wrong",
-  //         "data": null
-  //       };
-  //     }
-  //   } catch (e) {
-  //     //  log("$e");
-  //     log("Api call exception");
-  //     return {
-  //       "status": "false",
-  //       "message": "Something went wrong",
-  //       "data": null
-  //     };
-  //   }
-  // }
+      var response = await dio.post(
+          APIConstants.API_CALL_URL + APIConstants.API_PRICE_LIST,
+          options: Options(
+            headers: {
+              "authtoken": userdata.authToken,
+            },
+          ),
+          data: apiParam);
+      if (response.statusCode == 200) {
+        log("${response.data}");
+        return PriceEstimationModel.fromJson(response.data);
+      } else {
+        log("Response data rather than 200");
+        return PriceEstimationModel(
+          status: "false",
+          message: "Something went wrong",
+        );
+      }
+    } catch (e) {
+        log("$e");
+      // log("Api call exception");
+      return PriceEstimationModel(
+        status: "false",
+        message: "Something went wrong",
+      );
+    }
+  }
 
-  // Get City Name, State Name, Country Name
 
-  // static Future<dynamic> getUserLocationAPI() async {
-  //   try {
-  //     var userdata = UserData.geUserData();
 
-  //     Map _body = {
-  //       "userid": userdata.userid,
-  //       "predparam": {
-  //         "geo_lat": SharedPreference.getValue(
-  //             PrefConstants.LATITUDE), // "51.44244732098324",
-  //         "geo_long": SharedPreference.getValue(
-  //             PrefConstants.LONGITUDE) //   "-0.4145904688180463"
-  //       }
-  //     };
-  //     // log('before ${_body.toString()}');
-  //     var response = await dio.post(
-  //         'http://wystlegeo.k2ai.com/be_api/admin/aimodules/predict_rider_location_from_geopoint',
-  //         // APIConstants.API_CALL_URL + APIConstants.API_USER_LOCATION,
-  //         options: Options(
-  //           headers: {
-  //             "authtoken": userdata.authToken,
-  //           },
-  //         ),
-  //         data: _body);
-  //     // log(_body.toString());
-  //     if (response.statusCode == 200) {
-  //       log("${response.data}");
-  //       return UserLocationModel.fromJson(response.data);
-  //     } else {
-  //       log("Response data rather than 200");
-  //       return {
-  //         "status": "false",
-  //         "message": "Something went wrong",
-  //         "data": null
-  //       };
-  //     }
-  //   } catch (e) {
-  //     //  log("$e");
-  //     log("Api call exception");
-  //     return {
-  //       "status": "false",
-  //       "message": "Something went wrong",
-  //       "data": null
-  //     };
-  //   }
-  // }
+  
 
-  // static Future<dynamic> getDataServices() async {
-  //   try {
-  //     var response = await dio.post(
-  //       'http://65.1.91.159:8002/route?json={"locations":[{"lat":51.513159,"lon":-0.089380},{"lat":51.518407,"lon":-0.126330}],"costing":"auto","directions_options":{"units":"miles"}}',
-  //     );
-
-  //     if (response.statusCode == 200) {
-  //       log("${response.data}");
-  //       return RouteNavigationModel.fromJson(response.data);
-  //     } else {
-  //       log("Response data rather than 200");
-  //     }
-  //   } catch (e) {
-  //     //  log("$e");
-  //     log("Api call exception");
-  //   }
-  // }
+ 
+  
 }

@@ -57,10 +57,8 @@ class _MobileLoginScreenState extends State<MobileLoginScreen> {
   Future<void> checkInternet() async {
     isOnline = await InternetUtils.internetCheck();
     if (isOnline) {
-      // log("Internet is connected");
     } else {
       InternetUtils.networkErrorDialog(context);
-      // log("Internet is not connected");
     }
   }
 
@@ -129,10 +127,6 @@ class _MobileLoginScreenState extends State<MobileLoginScreen> {
     SharedPreference.setValue(PrefConstants.USER_CITY, place.locality);
     SharedPreference.setValue(PrefConstants.USER_COUNTRY, place.country);
     // log('street ${place.street}');
-    // log('subLocality ${place.subLocality}');
-    // log('locality ${place.locality}');
-    // log('postalCode ${place.postalCode}');
-    // log('country ${place.country}');
 
     countryName = place.country;
     getcountryWiseCode();
@@ -259,31 +253,13 @@ class _MobileLoginScreenState extends State<MobileLoginScreen> {
                                                   mobileNumber:
                                                       mobileController!.text,
                                                 )));
+                                  } else {
+                                    EasyLoading.dismiss();
+                                    toastshowDefaultSnackbar(
+                                        context, 'Please try again');
                                   }
                                 }
                               },
-                              // onTap: () async {
-                              //   EasyLoading.show(status: 'loading...');
-                              //   OTPVerifyModel sendOTPVerifyModel =
-                              //       await APIServices.getOTPVerifyAPI(
-                              //           mobileController!.text);
-                              //   if (otpVerifyModel?.status == 'true') {
-                              //     EasyLoading.dismiss();
-                              //     Navigator.push(
-                              //       context,
-                              //       MaterialPageRoute(
-                              //           builder: (context) => OTPScreen(
-                              //                   sendOTPVerifyModel:
-                              //                     sendOTPVerifyModel,
-                              //                 mobileNumber:
-                              //                     mobileController!.text,
-                              //               )),
-                              //     );
-                              //   } else {
-                              //     showAlertDialog(context,
-                              //         "Please enter valid mobile number");
-                              //   }
-                              // },
                               child: const Padding(
                                 padding: EdgeInsets.only(
                                     top: 40, left: 0.0, right: 0),
@@ -416,36 +392,15 @@ class _MobileLoginScreenState extends State<MobileLoginScreen> {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        // Permissions are denied, next time you could try
-        // requesting permissions again (this is also where
-        // Android's shouldShowRequestPermissionRationale
-        // returned true. According to Android guidelines
-        // your App should show an explanatory UI now.
         return Future.error('Location permissions are denied');
       }
     }
     if (permission == LocationPermission.deniedForever) {
-      // Permissions are denied forever, handle appropriately.
       return Future.error(
           'Location permissions are permanently denied, we cannot request permissions.');
     }
-    // When we reach here, permissions are granted and we can
-    // continue accessing the position of the device.
+
     return await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
   }
 }
-
-// class Language {
-//   final int id;
-//   final String name;
-//   final String languageCode;
-
-//   const Language(this.id, this.name, this.languageCode);
-// }
-
-// const List<Language> getLanguages = <Language>[
-//   Language(1, 'English', 'en'),
-//   Language(2, 'فارسی', 'fa'),
-//   Language(3, 'پشتو', 'ps'),
-// ];

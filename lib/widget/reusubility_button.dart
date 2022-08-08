@@ -186,7 +186,7 @@ class TextFieldWithOnlyPlaceHolder extends StatelessWidget {
       decoration:
           BoxDecoration(border: Border.all(color: ColorConstant.COLOR_BLACK)),
       child: TextFormField(
-        style: Theme.of(context).textTheme.subtitle1?.copyWith(
+        style: Theme.of(context).textTheme.bodyText2?.copyWith(
               color: ColorConstant.COLOR_TEXT,
               fontWeight: FontWeight.w400,
               decoration: TextDecoration.none,

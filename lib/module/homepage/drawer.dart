@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wystle/constant/image_constant.dart';
 import '../../constant/color_constant.dart';
 import '../menu/coupon_screen.dart';
-import '../menu/help.dart';
+import '../menu/trip_screen/support_trip/help.dart';
 import '../menu/menu_profile.dart';
 import '../menu/my_locations.dart';
 import '../menu/notifications.dart';

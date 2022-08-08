@@ -437,14 +437,7 @@ packages:
       name: flutter_map
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.14.0"
-  flutter_map_tappable_polyline:
-    dependency: "direct main"
-    description:
-      name: flutter_map_tappable_polyline
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.1.0"
+    version: "2.1.1"
   flutter_masked_text2:
     dependency: "direct main"
     description:
@@ -473,13 +466,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.6"
-  flutter_polyline_points:
-    dependency: "direct main"
-    description:
-      name: flutter_polyline_points
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
   flutter_spinkit:
     dependency: transitive
     description:
@@ -532,6 +518,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.3"
+  freshchat_sdk:
+    dependency: "direct main"
+    description:
+      name: freshchat_sdk
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.9.7"
   geocoding:
     dependency: "direct main"
     description:
@@ -952,6 +945,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.2"
+  polylabel:
+    dependency: transitive
+    description:
+      name: polylabel
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   positioned_tap_detector_2:
     dependency: transitive
     description:
@@ -1174,13 +1174,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.8.0"
-  transparent_image:
-    dependency: transitive
-    description:
-      name: transparent_image
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0"
   tripledes_nullsafety:
     dependency: transitive
     description:

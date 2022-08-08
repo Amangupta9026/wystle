@@ -115,7 +115,7 @@ class FlutterWavePaymentGatewayState extends State<FlutterWavePaymentGateway> {
           //configure the the type of payments that your business will accept
           acceptCardPayment: true,
           acceptUSSDPayment: false,
-          acceptAccountPayment: false,
+          acceptAccountPayment: true,
           acceptFrancophoneMobileMoney: false,
           acceptGhanaPayment: false,
           acceptMpesaPayment: false,
